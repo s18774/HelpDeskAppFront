@@ -3,7 +3,7 @@ import Select from "./Select.component"
 import { useEffect, useState } from "react"
 
 
-const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], slaList = [], helpdeskList = [], groupList = [], deviceTypes=[], fields = [], rolesList=[], passwordField=false }) => {
+const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], slaList = [], helpdeskList = [], groupList = [], deviceTypes=[], fields = [], rolesList=[], jobList=[], passwordField=false }) => {
     const [createdPassword, setCreatedPassword] = useState(null)
     const [password, setPassword] = useState(null)
 
@@ -118,7 +118,22 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                     />
                 </div>}
 
-            {/* id label type tag required */}
+                {jobList.length > 0 && 
+                <div>
+                <label htmlFor="jobType">Job type</label>
+                <Select 
+                    keyName="name" 
+                    valueName="name" 
+                    objects={jobList} 
+                    id="jobType"
+                    name="jobType" 
+                    key="jobType" 
+                    onSelect={e =>onChange("jobType", e.target.value) }/>
+                </div>}
+
+
+
+
 
             {fields.map(field =>
                 <div>

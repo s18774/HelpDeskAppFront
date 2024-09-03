@@ -41,3 +41,4 @@ export const post = async (url, data, token=null) => {
 export const put = async (url, data, token=null) => {
     return await sendRequest(url, "put", data, token)
 }
+

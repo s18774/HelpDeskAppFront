@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CommonForm from "../common/CommonForm.component";
 import { useToken } from "../../context/TokenContext";
-import { getList, URLS } from "../../api/urls";
+import { getFileWithParams, getList, URLS } from "../../api/urls";
+import JOB_TYPES from "../../api/jobTypes";
+import fileDownload from "js-file-download";
 
 
 const FORM_FIELDS = [
@@ -13,6 +15,7 @@ const Report = () => {
     const [helpdesks, setHelpdesks] = useState([])
     const {token} = useToken()
     const [reportParams, setReportParams] = useState({})
+    const ref = useRef(null);
 
     const getHelpdesk = async () => {
         setHelpdesks(await getList(URLS.AllHelpdesk, token))
@@ -23,8 +26,10 @@ const Report = () => {
         setReportParams(newReportParams)
     }
 
-    const generateReport = () => {
-
+    const generateReport = async () => {
+        const data = await getFileWithParams(URLS.ReportHelpdesk, reportParams, token)
+        fileDownload(data, "report.pdf")
+        console.log("OK download")
     }
 
     useEffect(() => {
@@ -33,8 +38,8 @@ const Report = () => {
 
     return <div>
         <h1>Reports</h1>
-        <CommonForm onChange={onChangeForm} helpdeskList={helpdesks} fields={FORM_FIELDS} />
-        <button onSubmit={generateReport}>Generate report</button>
+        <CommonForm onChange={onChangeForm} helpdeskList={helpdesks} fields={FORM_FIELDS} jobList={JOB_TYPES} />
+        <button onClick={generateReport}>Generate report</button>
     </div>
 }
 

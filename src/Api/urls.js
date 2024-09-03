@@ -29,7 +29,8 @@ export const URLS = {
     AllRoles: BASE_ADDRESS + "user/roles",
     AllStages: BASE_ADDRESS + "stage",
     CloseTicket: BASE_ADDRESS + "ticket/{ticketId}/close",
-    CloseApplication: BASE_ADDRESS + "application/{applicationId}/close"
+    CloseApplication: BASE_ADDRESS + "application/{applicationId}/close",
+    ReportHelpdesk: BASE_ADDRESS + "report/helpdesk"
 }
 
 export const parseUrlParams = (params) => {
@@ -63,4 +64,23 @@ export const getList = async (url, token=null) => {
 export const getListWithParams = async (url, params, token=null) => {
     const paramsStr = parseUrlParams(params)
     return await getList(url + paramsStr, token)
+}
+
+export const getFileWithParams = async (url, params, token=null) => {
+    const paramsStr = parseUrlParams(params)
+    try {
+        const response = await axios.get(url + paramsStr, {
+            responseType: "blob",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+          });
+        if(response && response.status === 200) {
+            return response.data
+        } else {
+            return null
+        }
+    } catch(error) {
+        return null
+    }
 }
