@@ -1,0 +1,15 @@
+nav {
+    background-color: rgb(218, 218, 218);
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 10px;
+    padding: 10px;
+}
+
+.menu-list a {
+    text-decoration: none;
+}
