@@ -128,6 +128,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                     id="jobType"
                     name="jobType" 
                     key="jobType" 
+                    emptyOptionEnabled={false}
                     onSelect={e =>onChange("jobType", e.target.value) }/>
                 </div>}
 
@@ -141,6 +142,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                     {field.tag === "input" && <input id={field.id}
                         key={field.id} name={field.id}
                         type={field.type}
+                        defaultValue={field.value}
                         onInput={e => onChange(field.id, field.type === "checkbox" ? e.target.value === "on" : e.target.value)}>
                     </input>}
 

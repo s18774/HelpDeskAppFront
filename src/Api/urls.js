@@ -19,6 +19,7 @@ export const URLS = {
     AllDevices: BASE_ADDRESS + "device",
     AllDeviceTypes: BASE_ADDRESS + "device/types",
     Devices: BASE_ADDRESS + "device",
+    GetDevice: BASE_ADDRESS + "device/{deviceId}",
     Groups: BASE_ADDRESS + "group",
     GetGroup: BASE_ADDRESS + "group/{groupId}",
     GroupUsers: BASE_ADDRESS + "group/{groupId}/users",

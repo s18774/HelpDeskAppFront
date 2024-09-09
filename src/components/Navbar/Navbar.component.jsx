@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import "./Navbar.component.css"
 import { useContext, useEffect, useState } from 'react'
-import { canSeeAllUsers, getRoleName, getUserFromToken } from '../../api/roles'
+import { canCreateReport, canSeeAllUsers, getRoleName, getUserFromToken } from '../../api/roles'
 import TokenContext from '../../context/TokenContext'
 
 
@@ -11,7 +11,6 @@ const URLS = [
     { url: "/application", name: "Application" },
     { url: "/device", name: "Devices" },
     { url: "/group", name: "Groups" },
-    { url: "/report", name: "Reports" },
 ]
 
 
@@ -27,6 +26,9 @@ const Navbar = () => {
             const newUrls = [{url: "/logout", name: "Logout"}, ...URLS]
             if(canSeeAllUsers(token)) {
                 newUrls.push({url: "/user", name: "Users"})
+            }
+            if(canCreateReport(token)) {
+                newUrls.push( { url: "/report", name: "Reports" })
             }
             setUrls(newUrls)
         } else {

@@ -42,6 +42,11 @@ export const canAttachHelpdeskUser = (token) => {
     return data.role === ROLES["Admin"]
 }
 
+export const canCreateReport = (token) => {
+    const data = decodeToken(token)
+    return data.role === ROLES["Admin"]
+}
+
 export const getUserFromToken = (token) => {
     const data = decodeToken(token)
     return data

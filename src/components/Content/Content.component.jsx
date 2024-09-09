@@ -17,6 +17,7 @@ import Group from "../Group/Group.component"
 import CreateGroup from "../CreateGroup/CreateGroup.component"
 import GroupDetails from "../GroupDetails/GroupDetails.component"
 import Report from "../Report/Report.component"
+import DeviceDetails from "../DeviceDetails/DeviceDetails.component"
 
 const Content = () => {
     return <div>
@@ -33,6 +34,7 @@ const Content = () => {
                 <Route path="/ticket/create" element={<CreateTicket/>} />
 
                 <Route path="/device" element={<Device/>} />
+                <Route path="/device/:id/details" element={<DeviceDetails/>}/>
                 <Route path="/device/create" element={<CreateDevice/>} />
 
                 <Route path="/user" element={<User/>} />
