@@ -33,6 +33,7 @@ const ApplicationDetails = () => {
     const [groupList, setGroupList] = useState([])
     const [edit, setEdit] = useState(false)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [editStatus, setEditStatus] = useState(false)
 
     const {id} = useParams()
     const {token} = useToken()
@@ -74,6 +75,7 @@ const ApplicationDetails = () => {
         if(ok) {
             toast.success("Updated!")
             setEdit(false)
+            setEditStatus(false)
             await getApplication()
         } else {
             console.log(error)
@@ -115,6 +117,7 @@ const ApplicationDetails = () => {
                 </HiddenElement>
             },
             {name: "Opening date", value: application.openingDate},
+            {name: "Closing date", value: application.closingDate},
             {name: "Subject", value: 
                 <HiddenElement hidden={!edit} ifHidden={application.subject}>
                     <input value={updatedApplication.subject} onInput={e => onChange("subject", e.target.value)}></input>
@@ -160,7 +163,7 @@ const ApplicationDetails = () => {
                 </HiddenElement>           
             },
             {name: "Status", value:   
-                        <HiddenElement hidden={!edit} ifHidden={showStage()}>
+                        <HiddenElement hidden={!edit && !editStatus} ifHidden={showStage()}>
                             <Select
                                 keyName="stageId"
                                 valueName="stageName"
@@ -173,9 +176,9 @@ const ApplicationDetails = () => {
                                 selectedValue={updatedApplication.stageId}
                                 emptyOptionEnabled={false}
                             />
-                            <button onClick={confirmChangeStage}>Save</button>
+                            {/* <button onClick={confirmChangeStage}>Save</button> */}
                         </HiddenElement>           
-                    }
+                    },
         ]
     }
 
@@ -195,6 +198,13 @@ const ApplicationDetails = () => {
         setModalIsOpen(false)
     }
 
+    const toggleEditStatus = () => {
+        if(edit) {
+            return
+        }
+        setEditStatus(!editStatus)
+    }
+
     const onSubmitCloseApplication = async () => {
         const {ok, data, error} = await post(URLS.CloseApplication.replace("{applicationId}", id), {}, token)
         if(ok) {
@@ -209,11 +219,21 @@ const ApplicationDetails = () => {
     return <div>
         {application && 
         <div>
-            <h1>Application details  {showStage() === "Closed" ? <span>(closed)</span> : <button onClick={toggleEdit}>Edit</button>}</h1>
+            <h1>Application details  {showStage() === "Closed" ? <span>(closed)</span> :
+            <span>
+
+<button onClick={toggleEdit}>Edit</button>
+{showStage() !== "Closed" && <button onClick={toggleEditStatus}>Change Status</button>}
+{showStage() !== "Closed" && <button onClick={closeApplication}>Close application</button>}
+            </span>
+        }</h1>
             <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
                 {applicationToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
             </CommonTable>
-            {showStage() !== "Closed" && <button onClick={closeApplication}>Close application</button>}
+
+            <HiddenElement hidden={!edit && !editStatus} ifHidden={() => ""}>
+                            <button onClick={confirmChangeStage}>Save</button>
+                        </HiddenElement>       
         </div>}
 
         <Modal isOpen={modalIsOpen} style={modalStyle}>

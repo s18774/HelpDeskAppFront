@@ -87,6 +87,7 @@ const CreateUser = () => {
             <button onClick={onAddUser}>Save</button>
             <button onClick={onBackToUserList}>Back</button>
             <CommonForm
+                userListLabel="Supervisor"
                 onChange={onChangeForm}
                 fields={FORM_FIELDS}
                 groupList={groupsList} 
