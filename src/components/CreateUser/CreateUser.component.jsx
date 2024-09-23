@@ -19,6 +19,10 @@ const CreateUser = () => {
         {id: "room", label: "Room", type: "number", tag: "input", required: false},
     ]
 
+    const requiredSelects = [
+        "departmentId", "roleName", "password"
+    ]
+
     const [formData, setFormData] = useState({})
     const [groupsList, setGroupsList] = useState([])
     const [departmentList, setdepartmentList] = useState([])
@@ -71,7 +75,11 @@ const CreateUser = () => {
                 onBackToUserList()
             } else {
                 console.log(error)
-                toast.error("Failed to create user")
+                try {
+                    toast.error(error.response.data.message)
+                } catch(err) {
+                    toast.error("Failed to create user")
+                }
             }
         }
     }
@@ -94,6 +102,7 @@ const CreateUser = () => {
                 departmentList={departmentList}
                 usersList={usersList}
                 rolesList={rolesList}
+                requiredFields={requiredSelects}
                 passwordField={true}/>
         </div>
 

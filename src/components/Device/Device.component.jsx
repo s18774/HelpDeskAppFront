@@ -1,6 +1,6 @@
 import { URLS, getListWithParams } from '../../api/urls'
 import { useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TokenContext from "../../context/TokenContext";
 import CommonTable from '../common/CommonTable.component';
 import DeviceSearchBar from '../common/DeviceSearchBar.component';
@@ -33,7 +33,8 @@ const Device = () => {
         <DeviceSearchBar onSubmit={getDevices}/>
 
         <CommonTable headers={["Device type", "Brand", "Model", "Serial number", "User"]}>
-            {devices.map(device => <TableRow key={device.serialNumber} elements={[device.deviceTypeName, device.brand, device.model, device.serialNumber, device.fullName]} />)}
+            {devices.map(device => <TableRow key={device.serialNumber} elements={[device.deviceTypeName, device.brand, 
+                device.model, <Link to={`/device/${device.deviceId}/details`}>{device.serialNumber}</Link>, device.fullName]} />)}
         </CommonTable>
     </div>
 }
