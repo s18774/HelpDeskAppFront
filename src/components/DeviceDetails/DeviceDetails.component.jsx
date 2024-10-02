@@ -44,15 +44,7 @@ const DeviceDetails = () => {
         }
     }
 
-    const getUsers = async () => {
-        setUsersList(await getList(URLS.AllUsers, token))
-    }
-
-    const onChange = (key, value) => {
-        setUpdatedDevice({...updatedDevice, [key]: value})
-    }
-
-    const confirmChangeStage = async () => {
+    const confirmChangeDevice = async () => {
         const {ok, data, error} = await put(URLS.Devices, updatedDevice, token)
         if(ok) {
             toast.success("Updated!")
@@ -62,6 +54,14 @@ const DeviceDetails = () => {
             console.log(error)
             toast.error(error.response.data.message)
         }
+    }
+
+    const getUsers = async () => {
+        setUsersList(await getList(URLS.AllUsers, token))
+    }
+
+    const onChange = (key, value) => {
+        setUpdatedDevice({...updatedDevice, [key]: value})
     }
 
     const toggleEdit = () => {
@@ -74,29 +74,37 @@ const DeviceDetails = () => {
         }
     }, [edit])
 
-    const showHelpdesk = () => {
-        const helpdesk = usersList.find(s => s.userId===device.helpdeskId)
-        return helpdesk ? helpdesk.fullName : ""
+    const showUsers = () => {
+        const user = usersList.find(s => s.userId===device.userId)
+        return user ? user.fullName : ""
     }
 
-    const ticketToParams = () => {
+    const deviceToParams = () => {
         return [
-            {name: "Number", value: device.ticketId},
-            {name: "Opening date", value: device.openingDate},
-            {name: "Title", value: 
-                <HiddenElement hidden={!edit} ifHidden={device.title}>
-                    <input value={updatedDevice.title} onInput={e => onChange("title", e.target.value)}></input>
+            {name: "Number", value: device.deviceId},
+            {name: "Device Type", value: device.deviceTypeName},
+            {name: "Brand", value: device.brand},
+            {name: "Model", value: device.model},
+            {name: "Serial Number", value: device.serialNumber},
+            {name: "Date Of Purchase", value: device.dateOfPurchase},
+            {name: "MAC Address", value: device.macAddress},
+            {name: "IP Address", value: 
+                <HiddenElement hidden={!edit} ifHidden={device.ipAddress}>
+                    <input value={updatedDevice.ipAddress} onInput={e => onChange("ipAddress", e.target.value)}></input>
                 </HiddenElement>
             },
-            {name: "Description", value: 
-                <HiddenElement hidden={!edit} ifHidden={device.description}>
-                    <input value={updatedDevice.description} onInput={e => onChange("description", e.target.value)}></input>
+            {name: "Inventory Number", value: 
+                <HiddenElement hidden={!edit} ifHidden={device.inventoryNumber}>
+                    <input value={updatedDevice.inventoryNumber} onInput={e => onChange("inventoryNumber", e.target.value)}></input>
                 </HiddenElement>
             },
-            {name: "User", value: device.fullName
+            {name: "Guarantee", value: 
+                <HiddenElement hidden={!edit} ifHidden={device.isGuarantee === 1 ? "Yes" : "No"}>
+                    <input type="checkbox" checked={updatedDevice.isGuarantee === 1} onChange={e => onChange("isGuarantee", updatedDevice.isGuarantee == 1 ? 0 : 1)}></input>
+                </HiddenElement>
             },
-            {name: "Helpdesk", value:   
-                <HiddenElement hidden={!edit} ifHidden={showHelpdesk()}>
+            {name: "User", value:   
+                <HiddenElement hidden={!edit} ifHidden={showUsers()}>
                     <Select
                         keyName="userId"
                         valueName="fullName"
@@ -104,33 +112,14 @@ const DeviceDetails = () => {
                         name="userId"
                         id="userId"
                         key="user"
-                        onSelect={e => onChange("helpdeskId", e.target.value)}
+                        onSelect={e => onChange("userId", e.target.value)}
                         required={false}
-                        selectedValue={updatedDevice.helpdeskId}
+                        selectedValue={updatedDevice.userId}
                         emptyOptionEnabled={true}
                     />
                 </HiddenElement>           
             }
         ]
-    }
-
-    const closeTicket = async () => {
-        setModalIsOpen(true)
-    }
-
-    const closeModal = () => {
-        setModalIsOpen(false)
-    }
-
-    const onSubmitCloseTicket = async () => {
-        const {ok, data, error} = await post(URLS.CloseTicket.replace("{ticketId}", id), {}, token)
-        if(ok) {
-            toast.success("Success")
-            getDevice()
-            closeModal()
-        } else {
-            toast.error("Failed to close ticket")
-        }
     }
 
     useEffect(() => {
@@ -141,19 +130,15 @@ const DeviceDetails = () => {
     return <div>
         {device && 
         <div>
-            <h1>Device details</h1>
+            <h1>Device details    <button onClick={toggleEdit}>Edit</button></h1>
             <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
-                {ticketToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
+                {deviceToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
             </CommonTable>
-        </div>}
 
-        <Modal isOpen={modalIsOpen} style={modalStyle}>
-            Are you sure??
-            <div>
-            <button onClick={onSubmitCloseTicket}>Yes</button>
-            <button onClick={closeModal}>No</button>
-            </div>
-        </Modal>    
+            <HiddenElement hidden={!edit} ifHidden={() => ""}>
+                            <button onClick={confirmChangeDevice}>Save</button>
+            </HiddenElement>   
+        </div>}
     </div>
 }
 
