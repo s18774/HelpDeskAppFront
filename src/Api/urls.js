@@ -18,6 +18,7 @@ export const URLS = {
     Dashboard: BASE_ADDRESS + "dashboard",
     AllDevices: BASE_ADDRESS + "device",
     AllDeviceTypes: BASE_ADDRESS + "device/types",
+    NotAttachedDevices: BASE_ADDRESS + "device/not-attached",
     Devices: BASE_ADDRESS + "device",
     GetDevice: BASE_ADDRESS + "device/{deviceId}",
     Groups: BASE_ADDRESS + "group",

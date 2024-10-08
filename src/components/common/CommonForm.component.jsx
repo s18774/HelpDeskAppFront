@@ -4,7 +4,9 @@ import Select from "./Select.component"
 import { useEffect, useState } from "react"
 
 
-const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], slaList = [], helpdeskList = [], groupList = [], deviceTypes=[], fields = [], rolesList=[], jobList=[], passwordField=false, userListLabel="User", requiredFields=[] }) => {
+const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], slaList = [],
+     helpdeskList = [], groupList = [], deviceTypes=[], fields = [], rolesList=[], jobList=[], 
+    devicesList=[], passwordField=false, userListLabel="User", requiredFields=[] }) => {
     const [createdPassword, setCreatedPassword] = useState(null)
     const [password, setPassword] = useState(null)
 
@@ -137,7 +139,22 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                     emptyOptionEnabled={false}
                     onSelect={e =>onChange("jobType", e.target.value) }/>
                 </div>}
+                
 
+                {devicesList.length > 0 && 
+                <div>
+                <RequiredField htmlFor="deviceId" name="Device" required={isRquired("deviceId")}/>
+                <Select 
+                    keyName="deviceId" 
+                    valueName="model" 
+                    objects={devicesList} 
+                    id="deviceId"
+                    name="deviceId" 
+                    key="deviceId" 
+                    emptyOptionEnabled={false}
+                    nameMapper={dev => dev.brand + " " + dev.model + " (" + dev.serialNumber + ")"}
+                    onSelect={e =>onChange("deviceId", e.target.value) }/>
+                </div>}
 
 
 

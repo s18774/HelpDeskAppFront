@@ -13,6 +13,7 @@ const CreateDevice = () => {
         {id: "model", label: "Model", type: "text", tag: "input", required: true},
         {id: "serialNumber", label: "Serial number", type: "text", tag: "input", required: true},
         {id: "inventoryNumber", label: "Inventory number", type: "text", tag: "input", required: true},
+        {id: "macAddress", label: "MAC Address", type: "text", tag: "input", required: false},
         {id: "guarantee", label: "Guarantee", type: "checkbox", tag: "input" },
     ]
 

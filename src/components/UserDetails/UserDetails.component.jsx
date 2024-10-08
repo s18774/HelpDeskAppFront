@@ -8,6 +8,7 @@ import CommonTable from "../common/CommonTable.component"
 import TableRow from "../common/TableRow.component"
 import Select from "../common/Select.component"
 import HiddenElement from "../common/HiddenElement.component"
+import CommonForm from "../common/CommonForm.component"
 
 
 const TEXT_FIELDS = [
@@ -33,6 +34,8 @@ const UserDetails = () => {
     const [dashboard, setDashboard] = useState([])
     const [stages, setStages] = useState([])
     const [devices, setDevices] = useState([])
+    const [notAttachedDevices, setNotAttachedDevices] = useState([])
+    const [selectedDevice, setSelectedDevice] = useState(null)
 
     const {id} = useParams()
     const {token} = useToken()
@@ -67,6 +70,10 @@ const UserDetails = () => {
 
     const getRoles = async () => {
         setRoles(await getList(URLS.AllRoles, token))
+    }
+
+    const getNotAttachedDevices = async () => {
+        setNotAttachedDevices(await getList(URLS.NotAttachedDevices, token))
     }
 
     const confirmChangeStage = async () => {
@@ -205,6 +212,16 @@ const UserDetails = () => {
         }
     } 
 
+    const onChangeSelectedDevice = (fieldName, deviceId) => {
+        setSelectedDevice(deviceId)
+    }
+
+    const attachDevice = () => {
+        if(selectedDevice != null) {
+            alert(selectedDevice)
+        }
+    }
+
     useEffect(() => {
         getUser()
         getGroups()
@@ -214,6 +231,7 @@ const UserDetails = () => {
         getStages()
         getDashboard(id)
         getDevices(id)
+        getNotAttachedDevices()
     }, [])
 
     return <div>
@@ -231,7 +249,11 @@ const UserDetails = () => {
             </CommonTable>
 
             <h2>Devices</h2>
-            
+            <div>
+                <CommonForm devicesList={notAttachedDevices} onChange={onChangeSelectedDevice} />
+                <button onClick={attachDevice}>Attach device</button>
+            </div>
+
             <CommonTable headers={["Device type",	"Brand",	"Model",	"Serial number"]}>
                 {devices.map(dev => <TableRow key={dev.deviceId} elements={[dev.deviceTypeName, dev.brand, dev.model, dev.serialNumber]} />)}
             </CommonTable>
