@@ -34,7 +34,7 @@ const Device = () => {
 
         <CommonTable headers={["Device type", "Brand", "Model", "Serial number", "User"]}>
             {devices.map(device => <TableRow key={device.serialNumber} elements={[device.deviceTypeName, device.brand, 
-                device.model, <Link to={`/device/${device.deviceId}/details`}>{device.serialNumber}</Link>, device.fullName]} />)}
+                device.model, <Link to={`/device/${device.deviceId}/details`}>{device.serialNumber}</Link>,  <Link to={`/user/${device.userId}/details`}>{device.fullName}</Link>]} />)}
         </CommonTable>
     </div>
 }

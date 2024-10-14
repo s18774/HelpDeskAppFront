@@ -21,6 +21,7 @@ export const URLS = {
     NotAttachedDevices: BASE_ADDRESS + "device/not-attached",
     Devices: BASE_ADDRESS + "device",
     GetDevice: BASE_ADDRESS + "device/{deviceId}",
+    AttachDevice: BASE_ADDRESS + "device/attach",
     Groups: BASE_ADDRESS + "group",
     GetGroup: BASE_ADDRESS + "group/{groupId}",
     GroupUsers: BASE_ADDRESS + "group/{groupId}/users",

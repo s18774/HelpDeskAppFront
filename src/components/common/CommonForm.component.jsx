@@ -151,7 +151,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                     id="deviceId"
                     name="deviceId" 
                     key="deviceId" 
-                    emptyOptionEnabled={false}
+                    emptyOptionEnabled={true}
                     nameMapper={dev => dev.brand + " " + dev.model + " (" + dev.serialNumber + ")"}
                     onSelect={e =>onChange("deviceId", e.target.value) }/>
                 </div>}

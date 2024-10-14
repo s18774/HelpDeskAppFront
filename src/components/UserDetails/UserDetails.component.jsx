@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom"
-import { get, put } from "../../api/requests"
+import { get, post, put } from "../../api/requests"
 import { URLS, getList, getListWithParams } from "../../api/urls"
 import { useToken } from "../../context/TokenContext"
 import { useEffect, useState } from "react"
@@ -216,9 +216,21 @@ const UserDetails = () => {
         setSelectedDevice(deviceId)
     }
 
-    const attachDevice = () => {
+    const attachDevice = async () => {
         if(selectedDevice != null) {
-            alert(selectedDevice)
+            const body = {
+                userId: id,
+                deviceId: selectedDevice
+            }
+            const {ok, data, error} = await post(URLS.AttachDevice, body, token)
+            if(ok) {
+                setSelectedDevice(null)
+                getDevices(id)
+                getNotAttachedDevices()
+                toast.success("Device attached")
+            }
+        } else {
+            toast.error("Select device first")
         }
     }
 
@@ -250,12 +262,12 @@ const UserDetails = () => {
 
             <h2>Devices</h2>
             <div>
-                <CommonForm devicesList={notAttachedDevices} onChange={onChangeSelectedDevice} />
+                <CommonForm devicesList={notAttachedDevices} onChange={onChangeSelectedDevice}/>
                 <button onClick={attachDevice}>Attach device</button>
             </div>
 
             <CommonTable headers={["Device type",	"Brand",	"Model",	"Serial number"]}>
-                {devices.map(dev => <TableRow key={dev.deviceId} elements={[dev.deviceTypeName, dev.brand, dev.model, dev.serialNumber]} />)}
+                {devices.map(dev => <TableRow key={dev.deviceId} elements={[dev.deviceTypeName, dev.brand, dev.model, <Link to={`/device/${dev.deviceId}/details`}>{dev.serialNumber}</Link>]} />)}
             </CommonTable>
         </div>}
     </div>
