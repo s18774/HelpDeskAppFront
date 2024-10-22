@@ -4,6 +4,7 @@ import { URLS, getList, getListWithParams } from "../../api/urls"
 import SearchBar from "../common/SearchBar.component"
 import TableRow from "../common/TableRow.component"
 import CommonTable from "../common/CommonTable.component"
+import { Link } from "react-router-dom"
 
 
 
@@ -29,6 +30,10 @@ const Dashboard = () => {
         }
     } 
 
+    const getJobLink = (job) => {
+        return <Link to={`/${job.jobType}/${job.jobId}/details`}>{job.jobId}</Link>
+    }
+
     useEffect(() => {
         getDashboard()
         getStages()
@@ -39,7 +44,12 @@ const Dashboard = () => {
 
         <SearchBar onSubmit={getDashboard} jobType={true}/>
         <CommonTable headers={["Type", "Id", "User", "SLA", "Stage"]}>
-            {dashboard.map(job => <TableRow key={job.jobId} elements={[job.jobType, job.jobId, job.fullName, job.sla, getStageName(job.stageId)]} />)}
+            {dashboard.map(job => <TableRow key={job.jobId} elements={[
+                job.jobType, 
+                getJobLink(job), 
+                <Link to={`/user/${job.userId}/details`}>{job.fullName}</Link>, 
+                job.sla, 
+                getStageName(job.stageId)]} />)}
         </CommonTable>
     </div>
 }

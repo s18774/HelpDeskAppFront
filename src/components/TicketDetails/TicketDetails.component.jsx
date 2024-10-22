@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { get, post, put } from "../../api/requests"
 import { URLS, getList } from "../../api/urls"
 import { useToken } from "../../context/TokenContext"
@@ -105,7 +105,7 @@ const TicketDetails = () => {
 
     const showHelpdesk = () => {
         const helpdesk = helpdeskList.find(s => s.userId===ticket.helpdeskId)
-        return helpdesk ? helpdesk.fullName : ""
+        return helpdesk ?  <Link to={`/user/${ticket.helpdeskId}/details`}>{helpdesk.fullName}</Link> : ""
     }
 
     const ticketToParams = () => {
@@ -128,7 +128,7 @@ const TicketDetails = () => {
                     <input value={updatedTicket.description} onInput={e => onChange("description", e.target.value)}></input>
                 </HiddenElement>
             },
-            {name: "User", value: ticket.fullName
+            {name: "User", value: <Link to={`/user/${ticket.userId}/details`}>{ticket.fullName}</Link>, 
             },
             {name: "Helpdesk", value:   
                 <HiddenElement hidden={!edit} ifHidden={showHelpdesk()}>

@@ -1,4 +1,3 @@
-import ApplicationRow from "./ApplicationRow.component"
 import { URLS, getList } from "../../api/urls"
 import { useContext, useEffect, useState } from "react"
 import SearchBar from "../common/SearchBar.component"
@@ -59,7 +58,8 @@ const Application = () => {
         <SearchBar onSubmit={getApplications} stage={getOpenStageId()}/> }
 
         <CommonTable headers={["Id", "SLA", "Opening date", "Subject", "User", "Stage"]}>
-            {applications.map(app => <TableRow key={app.applicationId} elements={[<Link to={`/application/${app.applicationId}/details`}>{app.applicationId}</Link>, app.sla, app.openingDate, app.subject, app.fullName, getStageName(app.stageId)]} />)}
+            {applications.map(app => <TableRow key={app.applicationId} elements={[<Link to={`/application/${app.applicationId}/details`}>{app.applicationId}</Link>, 
+            app.sla, app.openingDate, app.subject, <Link to={`/user/${app.userId}/details`}>{app.fullName}</Link>, getStageName(app.stageId)]} />)}
         </CommonTable>
     </div>
 }

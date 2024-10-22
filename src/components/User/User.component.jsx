@@ -37,7 +37,7 @@ const User = () => {
                     <Link to={`/user/${user.userId}/details`}>{user.firstName}</Link>, 
                     <Link to={`/user/${user.userId}/details`}>{user.secondName}</Link>, 
                     user.positionName, 
-                    user.groupName
+                    <Link to={`/group/${user.groupId}/details`}>{user.groupName}</Link>
                 ]} />)}
         </CommonTable>
     </div>

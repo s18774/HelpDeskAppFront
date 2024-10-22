@@ -60,7 +60,8 @@ const Ticket = () => {
         <SearchBar onSubmit={getTickets} stage={getOpenStageId()}/>}
 
         <CommonTable headers={["Number", "SLA", "Opening date", "Title", "User", "Stage"]}>
-            {tickets.map(app => <TableRow key={app.ticketId} elements={[<Link to={`/ticket/${app.ticketId}/details`}>{app.ticketId}</Link>, app.sla, app.openingDate, app.title, app.fullName, getStageName(app.stageId)]} />)}
+            {tickets.map(app => <TableRow key={app.ticketId} elements={[<Link to={`/ticket/${app.ticketId}/details`}>{app.ticketId}</Link>, 
+            app.sla, app.openingDate, app.title, <Link to={`/user/${app.userId}/details`}>{app.fullName}</Link>, getStageName(app.stageId)]} />)}
         </CommonTable>
     </div>
 }

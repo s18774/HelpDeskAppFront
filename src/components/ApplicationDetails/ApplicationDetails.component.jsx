@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { get, post, put } from "../../api/requests"
 import { URLS, getList } from "../../api/urls"
 import { useToken } from "../../context/TokenContext"
@@ -100,12 +100,12 @@ const ApplicationDetails = () => {
 
     const showHelpdesk = () => {
         const helpdesk = helpdeskList.find(s => s.userId===application.helpdeskId)
-        return helpdesk ? helpdesk.fullName : ""
+        return helpdesk ?  <Link to={`/user/${application.helpdeskId}/details`}>{helpdesk.fullName}</Link> : ""
     }
 
     const showGroup = () => {
         const group = groupList.find(s => s.groupId===application.groupId)
-        return group ? group.groupName : ""
+        return group ? <Link to={`/group/${application.groupId}/details`}>{group.groupName}</Link> : ""
     }
 
     const applicationToParams = () => {
@@ -128,7 +128,7 @@ const ApplicationDetails = () => {
                     <input value={updatedApplication.description} onInput={e => onChange("description", e.target.value)}></input>
                 </HiddenElement>
             },
-            {name: "User", value: application.fullName
+            {name: "User", value: <Link to={`/user/${application.userId}/details`}>{application.fullName}</Link>
             },
             {name: "Helpdesk", value:   
                 <HiddenElement hidden={!edit} ifHidden={showHelpdesk()}>
@@ -158,7 +158,7 @@ const ApplicationDetails = () => {
                         onSelect={e => onChange("groupId", e.target.value)}
                         required={true}
                         selectedValue={updatedApplication.groupId}
-                        emptyOptionEnabled={false}
+                        emptyOptionEnabled={true}
                     />
                 </HiddenElement>           
             },

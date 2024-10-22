@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { get, post, put } from "../../api/requests"
 import { URLS, getList } from "../../api/urls"
 import { useToken } from "../../context/TokenContext"
@@ -76,7 +76,7 @@ const DeviceDetails = () => {
 
     const showUsers = () => {
         const user = usersList.find(s => s.userId===device.userId)
-        return user ? user.fullName : ""
+        return user ? <Link to={`/user/${device.userId}/details`}>{user.fullName}</Link> : ""
     }
 
     const deviceToParams = () => {

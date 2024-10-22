@@ -99,12 +99,12 @@ const UserDetails = () => {
 
     const showGroup = () => {
         const group = groups.find(s => s.groupId===user.groupId)
-        return (group) ? group.groupName : "";
+        return (group) ? <Link to={`/group/${user.groupId}/details`}>{user.groupName}</Link> : "";
     }
 
     const showSupervisor = () => {
         const supervisor = users.find(s => s.userId===user.supervisorId)
-        return (supervisor) ? supervisor.fullName : "";
+        return (supervisor) ? <Link to={`/user/${user.supervisorId}/details`}>{supervisor.fullName}</Link> : "";
     }
 
     const showDepartment = () => {
@@ -244,7 +244,7 @@ const UserDetails = () => {
         getDashboard(id)
         getDevices(id)
         getNotAttachedDevices()
-    }, [])
+    }, [id])
 
     return <div>
         {user && 
