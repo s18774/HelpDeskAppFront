@@ -181,9 +181,9 @@ const UserDetails = () => {
                         id="userId"
                         key="user"
                         onSelect={e => onChange("supervisorId", e.target.value)}
-                        emptyOptionEnabled={users.length > 1}
+                        emptyOptionEnabled={true}
                         selectedValue={updatedUser.supervisorId}
-                        required={true}
+                        required={false}
                     />
                       <button onClick={confirmChangeStage}>Save</button>
                 </HiddenElement>           
