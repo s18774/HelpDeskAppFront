@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 
 const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], slaList = [],
      helpdeskList = [], groupList = [], deviceTypes=[], fields = [], rolesList=[], jobList=[], 
-    devicesList=[], passwordField=false, userListLabel="User", requiredFields=[] }) => {
+    devicesList=[], passwordField=false, userListLabel="User", requiredFields=[], expLvlsList=[] }) => {
     const [createdPassword, setCreatedPassword] = useState(null)
     const [password, setPassword] = useState(null)
 
@@ -92,6 +92,21 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                         required={true}
                     />
                 </div>}
+            {expLvlsList.length > 0 && 
+            <div>
+                <RequiredField htmlFor="expId" name="Expcerience Level" required={isRquired("expId")}/>
+                <Select
+                    keyName="expId"
+                    valueName="expLevel"
+                    objects={expLvlsList}
+                    name="expId"
+                    id="expId"
+                    key="exp"
+                    onSelect={e => onChange("experienceLevelId", e.target.value)}
+                    emptyOptionEnabled={true}
+                    required={true}
+                />
+            </div>}
 
             {deviceTypes.length > 0 &&
                 <div>

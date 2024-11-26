@@ -31,6 +31,7 @@ const UserDetails = () => {
     const [users, setUsers] = useState([])
     const [roles, setRoles] = useState([])
     const [edit, setEdit] = useState(false)
+    const [expLvlList, setExpLvlList] = useState([])
     const [dashboard, setDashboard] = useState([])
     const [stages, setStages] = useState([])
     const [devices, setDevices] = useState([])
@@ -76,6 +77,10 @@ const UserDetails = () => {
         setNotAttachedDevices(await getList(URLS.NotAttachedDevices, token))
     }
 
+    const getExpLvls = async () => {
+        setExpLvlList(await getList(URLS.AllExpLvls, token))
+    }
+
     const confirmChangeStage = async () => {
         const {ok, data, error} = await put(URLS.User, updatedUser, token)
         if(ok) {
@@ -117,6 +122,11 @@ const UserDetails = () => {
         return (role) ? role.roleName : "";
     }
 
+    const showExpLvl = () => {
+        const exp = expLvlList.find(s => s.expId===user.experienceLevelId)
+        return (exp) ? exp.expLevel : "";
+    }
+
     const ticketToParams = () => {
         const inputFields = TEXT_FIELDS.map(field => ({name: field.label, value: 
             <HiddenElement hidden={!edit} ifHidden={user[field.name]}>
@@ -152,6 +162,20 @@ const UserDetails = () => {
                      onSelect={e => onChange("departmentId", e.target.value)} 
                      required={true}
                      selectedValue={user.departmentId}
+                     />
+                </HiddenElement>           
+            },
+            {name: "Experience Level", value:   
+                <HiddenElement hidden={!edit} ifHidden={showExpLvl()}>
+                    <Select
+                     keyName="expId" 
+                     valueName="expLevel" 
+                     objects={expLvlList} 
+                     name="expId"
+                     key="exp" 
+                     onSelect={e => onChange("experienceLevelId", e.target.value)} 
+                     required={true}
+                     selectedValue={user.experienceLevelId}
                      />
                 </HiddenElement>           
             },
@@ -244,6 +268,7 @@ const UserDetails = () => {
         getDashboard(id)
         getDevices(id)
         getNotAttachedDevices()
+        getExpLvls()
     }, [id])
 
     return <div>

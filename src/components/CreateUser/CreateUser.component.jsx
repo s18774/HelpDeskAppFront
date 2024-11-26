@@ -28,6 +28,7 @@ const CreateUser = () => {
     const [departmentList, setdepartmentList] = useState([])
     const [usersList, setUsersList] = useState([])
     const [rolesList, setRolesList] = useState([])
+    const [expLvlList, setExpLvlList] = useState([])
 
     const { token } = useContext(TokenContext)
     const navigate = useNavigate()
@@ -44,6 +45,10 @@ const CreateUser = () => {
         setRolesList(await getList(URLS.AllRoles, token))
     }
 
+    const getExpLvls = async () => {
+        setExpLvlList(await getList(URLS.AllExpLvls, token))
+    }
+
     const getDepartments = async () => {
         const departments = await getList(URLS.AllDepartments, token)
         departments.forEach(department => {
@@ -57,6 +62,7 @@ const CreateUser = () => {
         getDepartments()
         getUsers()
         getRoles()
+        getExpLvls()
     }, [])
 
     const onChangeForm = (fieldName, value) => {
@@ -103,6 +109,7 @@ const CreateUser = () => {
                 usersList={usersList}
                 rolesList={rolesList}
                 requiredFields={requiredSelects}
+                expLvlsList={expLvlList}
                 passwordField={true}/>
         </div>
 
