@@ -32,6 +32,7 @@ export const URLS = {
     AllRoles: BASE_ADDRESS + "user/roles",
     AllExpLvls: BASE_ADDRESS + "user/experience-levels",
     AllStages: BASE_ADDRESS + "stage",
+    AllLogs: BASE_ADDRESS + "logs",
     CloseTicket: BASE_ADDRESS + "ticket/{ticketId}/close",
     CloseApplication: BASE_ADDRESS + "application/{applicationId}/close",
     ReportHelpdesk: BASE_ADDRESS + "report/helpdesk"

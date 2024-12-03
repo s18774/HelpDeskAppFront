@@ -18,6 +18,7 @@ import CreateGroup from "../CreateGroup/CreateGroup.component"
 import GroupDetails from "../GroupDetails/GroupDetails.component"
 import Report from "../Report/Report.component"
 import DeviceDetails from "../DeviceDetails/DeviceDetails.component"
+import Logs from "../Logs/Logs.component"
 
 const Content = () => {
     return <div>
@@ -47,6 +48,8 @@ const Content = () => {
 
                 <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/report" element={<Report/>}/>
+
+                <Route path="/log" element={<Logs/>}/>
             </Routes>
     </div>
 }
