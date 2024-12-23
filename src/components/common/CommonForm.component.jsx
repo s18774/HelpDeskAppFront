@@ -5,8 +5,8 @@ import { useEffect, useState } from "react"
 
 
 const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], slaList = [],
-     helpdeskList = [], groupList = [], deviceTypes=[], fields = [], rolesList=[], jobList=[], 
-    devicesList=[], passwordField=false, userListLabel="User", requiredFields=[], expLvlsList=[] }) => {
+    helpdeskList = [], groupList = [], deviceTypes = [], fields = [], rolesList = [], jobList = [],
+    devicesList = [], passwordField = false, userListLabel = "User", requiredFields = [], expLvlsList = [] }) => {
     const [createdPassword, setCreatedPassword] = useState(null)
     const [password, setPassword] = useState(null)
 
@@ -22,7 +22,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
         setPassword(userPassword)
         setCreatedPassword(null)
     }
-    
+
     useEffect(() => {
         if (usersList.length > 0) {
             onChange("userId", usersList[0].userId)
@@ -37,7 +37,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
         <form className="rounded" onSubmit={onSubmit}>
             {usersList.length > 0 &&
                 <div>
-                    <RequiredField htmlFor="userId" name={userListLabel} required={isRquired("userId")}/>
+                    <RequiredField htmlFor="userId" name={userListLabel} required={isRquired("userId")} />
                     <Select
                         keyName="userId"
                         valueName="fullName"
@@ -52,18 +52,18 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                 </div>}
             {slaList.length > 0 &&
                 <div>
-                    <RequiredField htmlFor="slaId" name="SLA" required={isRquired("slaId")}/>
+                    <RequiredField htmlFor="slaId" name="SLA" required={isRquired("slaId")} />
                     <Select keyName="slaId" valueName="slaLevel" objects={slaList} name="slaId" key="sla" onSelect={e => onChange("slaId", e.target.value)} required={true} />
                 </div>}
             {departmentList.length > 0 &&
                 <div>
-                    <RequiredField htmlFor="departmentId" name="Department" required={isRquired("departmentId")}/>
+                    <RequiredField htmlFor="departmentId" name="Department" required={isRquired("departmentId")} />
                     <Select keyName="departmentId" valueName="name" objects={departmentList} name="departmentId" key="department" onSelect={e => onChange("departmentId", e.target.value)} required={true} />
                 </div>}
 
             {helpdeskList.length > 0 &&
                 <div>
-                    <RequiredField htmlFor="userId" name="Helpdesk" required={isRquired("userId")}/>
+                    <RequiredField htmlFor="userId" name="Helpdesk" required={isRquired("userId")} />
                     <Select
                         keyName="userId"
                         valueName="fullName"
@@ -79,7 +79,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
 
             {groupList.length > 0 &&
                 <div>
-                    <RequiredField htmlFor="groupId" name="Group" required={isRquired("groupId")}/>
+                    <RequiredField htmlFor="groupId" name="Group" required={isRquired("groupId")} />
                     <Select
                         keyName="groupId"
                         valueName="groupName"
@@ -92,25 +92,25 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                         required={true}
                     />
                 </div>}
-            {expLvlsList.length > 0 && 
-            <div>
-                <RequiredField htmlFor="expId" name="Expcerience Level" required={isRquired("expId")}/>
-                <Select
-                    keyName="expId"
-                    valueName="expLevel"
-                    objects={expLvlsList}
-                    name="expId"
-                    id="expId"
-                    key="exp"
-                    onSelect={e => onChange("experienceLevelId", e.target.value)}
-                    emptyOptionEnabled={true}
-                    required={true}
-                />
-            </div>}
+            {expLvlsList.length > 0 &&
+                <div>
+                    <RequiredField htmlFor="expId" name="Expcerience Level" required={isRquired("expId")} />
+                    <Select
+                        keyName="expId"
+                        valueName="expLevel"
+                        objects={expLvlsList}
+                        name="expId"
+                        id="expId"
+                        key="exp"
+                        onSelect={e => onChange("experienceLevelId", e.target.value)}
+                        emptyOptionEnabled={true}
+                        required={true}
+                    />
+                </div>}
 
             {deviceTypes.length > 0 &&
                 <div>
-                    <RequiredField htmlFor="deviceTypeId" name="Device type" required={isRquired("deviceTypeId")}/>
+                    <RequiredField htmlFor="deviceTypeId" name="Device type" required={isRquired("deviceTypeId")} />
                     <Select
                         keyName="deviceTypeId"
                         valueName="typeDescription"
@@ -124,9 +124,9 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                     />
                 </div>}
 
-                {rolesList.length > 0 &&
+            {rolesList.length > 0 &&
                 <div>
-                    <RequiredField htmlFor="roleName" name="Role" required={isRquired("roleName")}/>
+                    <RequiredField htmlFor="roleName" name="Role" required={isRquired("roleName")} />
 
                     <Select
                         keyName="roleId"
@@ -141,42 +141,40 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                     />
                 </div>}
 
-                {jobList.length > 0 && 
+            {jobList.length > 0 &&
                 <div>
-                <RequiredField htmlFor="jobType" name="Job type" required={isRquired("jobType")}/>
-                <Select 
-                    keyName="name" 
-                    valueName="name" 
-                    objects={jobList} 
-                    id="jobType"
-                    name="jobType" 
-                    key="jobType" 
-                    emptyOptionEnabled={false}
-                    onSelect={e =>onChange("jobType", e.target.value) }/>
-                </div>}
-                
-
-                {devicesList.length > 0 && 
-                <div>
-                <RequiredField htmlFor="deviceId" name="Device" required={isRquired("deviceId")}/>
-                <Select 
-                    keyName="deviceId" 
-                    valueName="model" 
-                    objects={devicesList} 
-                    id="deviceId"
-                    name="deviceId" 
-                    key="deviceId" 
-                    emptyOptionEnabled={true}
-                    nameMapper={dev => dev.brand + " " + dev.model + " (" + dev.serialNumber + ")"}
-                    onSelect={e =>onChange("deviceId", e.target.value) }/>
+                    <RequiredField htmlFor="jobType" name="Job type" required={isRquired("jobType")} />
+                    <Select
+                        keyName="name"
+                        valueName="name"
+                        objects={jobList}
+                        id="jobType"
+                        name="jobType"
+                        key="jobType"
+                        emptyOptionEnabled={false}
+                        onSelect={e => onChange("jobType", e.target.value)} />
                 </div>}
 
 
+            {devicesList.length > 0 &&
+                <div>
+                    <RequiredField htmlFor="deviceId" name="Device" required={isRquired("deviceId")} />
+                    <Select
+                        keyName="deviceId"
+                        valueName="model"
+                        objects={devicesList}
+                        id="deviceId"
+                        name="deviceId"
+                        key="deviceId"
+                        emptyOptionEnabled={true}
+                        nameMapper={dev => dev.brand + " " + dev.model + " (" + dev.serialNumber + ")"}
+                        onSelect={e => onChange("deviceId", e.target.value)} />
+                </div>}
 
 
             {fields.map(field =>
                 <div>
-                    <RequiredField htmlFor={field.id} name={field.label} required={field.required}/>
+                    <RequiredField htmlFor={field.id} name={field.label} required={field.required} />
                     {field.tag === "input" && <input id={field.id}
                         key={field.id} name={field.id}
                         type={field.type}
@@ -193,7 +191,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
             )}
 
             {passwordField && <>
-                <RequiredField htmlFor="password" name="Password" required={isRquired("password")}/>
+                <RequiredField htmlFor="password" name="Password" required={isRquired("password")} />
                 <input type="password" name="password" id="password" value={password} onInput={e => onPasswordChange(e.target.value)} required></input>
                 <button type="button" onClick={generatePassword}>Generate password</button>
                 {createdPassword && <div>Password: {createdPassword}</div>}

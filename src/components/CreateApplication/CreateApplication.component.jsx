@@ -66,7 +66,7 @@ const CreateApplication = () => {
         if (Object.keys(formData).length === 0) {
             toast.error("Fill the form first!")
         } else {
-            const { ok, error } = await post(URLS.Applications, formData, token) //TODO: zmienic na dobry url itp
+            const { ok, error } = await post(URLS.Applications, formData, token)
             if (ok) {
                 toast.success("Added")
                 onBackToApplicationList()

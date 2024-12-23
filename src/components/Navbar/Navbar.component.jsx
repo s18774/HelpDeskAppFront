@@ -22,23 +22,23 @@ const Navbar = () => {
     useEffect(() => {
         if (token != null) {
             setUser(getUserFromToken(token))
-            const newUrls = [{url: "/logout", name: "Logout"}, ...URLS]
-            if(canSeeAllUsers(token)) {
-                newUrls.push({url: "/user", name: "Users"})
+            const newUrls = [{ url: "/logout", name: "Logout" }, ...URLS]
+            if (canSeeAllUsers(token)) {
+                newUrls.push({ url: "/user", name: "Users" })
             }
-            if(canCreateReport(token)) {
-                newUrls.push( { url: "/report", name: "Reports" })
+            if (canCreateReport(token)) {
+                newUrls.push({ url: "/report", name: "Reports" })
             }
-            if(canSeeLogs(token)) {
-                newUrls.push( { url: "/log", name: "Logs" })
+            if (canSeeLogs(token)) {
+                newUrls.push({ url: "/log", name: "Logs" })
             }
-            if(canSeeGroups(token)) {
+            if (canSeeGroups(token)) {
                 newUrls.push({ url: "/group", name: "Groups" })
             }
             setUrls(newUrls)
         } else {
             setUser({})
-            setUrls([{url: "/login", name: "Login"}, ...URLS])
+            setUrls([{ url: "/login", name: "Login" }, ...URLS])
         }
     }, [token])
 

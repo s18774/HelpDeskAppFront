@@ -9,17 +9,18 @@ import TableRow from "../common/TableRow.component"
 import Select from "../common/Select.component"
 import HiddenElement from "../common/HiddenElement.component"
 import CommonForm from "../common/CommonForm.component"
+import { canAttachDevice, canEditUser, canSeeGroups } from "../../api/roles"
 
 
 const TEXT_FIELDS = [
-    {label: "Firstname", name: "firstName"},
-    {label: "Secondname Name", name: "secondName"},
-    {label: "Position", name: "positionName"},
-    {label: "Email", name: "email"},
-    {label: "Phone number", name: "phoneNumber"},
-    {label: "Username", name: "username"},
-    {label: "Floor", name: "floor"},
-    {label: "Room", name: "room"},
+    { label: "Firstname", name: "firstName" },
+    { label: "Secondname Name", name: "secondName" },
+    { label: "Position", name: "positionName" },
+    { label: "Email", name: "email" },
+    { label: "Phone number", name: "phoneNumber" },
+    { label: "Username", name: "username" },
+    { label: "Floor", name: "floor" },
+    { label: "Room", name: "room" },
 ]
 
 
@@ -38,12 +39,12 @@ const UserDetails = () => {
     const [notAttachedDevices, setNotAttachedDevices] = useState([])
     const [selectedDevice, setSelectedDevice] = useState(null)
 
-    const {id} = useParams()
-    const {token} = useToken()
+    const { id } = useParams()
+    const { token } = useToken()
 
     const getUser = async () => {
-        const {ok, data, error} = await get(URLS.GetUser.replace("{userId}", id), token)
-        if(ok) {
+        const { ok, data, error } = await get(URLS.GetUser.replace("{userId}", id), token)
+        if (ok) {
             data.slaId = data.sla
             setUser(data)
             setUpdatedUser(data)
@@ -58,7 +59,7 @@ const UserDetails = () => {
     }
 
     const onChange = (key, value) => {
-        setUpdatedUser({...updatedUser, [key]: value})
+        setUpdatedUser({ ...updatedUser, [key]: value })
     }
 
     const getUsers = async () => {
@@ -82,8 +83,8 @@ const UserDetails = () => {
     }
 
     const confirmChangeStage = async () => {
-        const {ok, data, error} = await put(URLS.User, updatedUser, token)
-        if(ok) {
+        const { ok, data, error } = await put(URLS.User, updatedUser, token)
+        if (ok) {
             toast.success("Updated!")
             setEdit(false)
             await getUser()
@@ -93,93 +94,102 @@ const UserDetails = () => {
     }
 
     const toggleEdit = () => {
-       setEdit(!edit)
+        setEdit(!edit)
     }
 
     useEffect(() => {
-        if(edit) {
+        if (edit) {
             setUpdatedUser(user)
         }
     }, [edit])
 
     const showGroup = () => {
-        const group = groups.find(s => s.groupId===user.groupId)
-        return (group) ? <Link to={`/group/${user.groupId}/details`}>{user.groupName}</Link> : "";
+        const group = groups.find(s => s.groupId === user.groupId)
+        if(group) {
+            return canSeeGroups(token) ? <Link to={`/group/${user.groupId}/details`}>{user.groupName}</Link>
+                : <Link onClick={() => toast.error("No permissions!")}>{user.groupName}</Link>;
+        }
+        return ""
     }
 
     const showSupervisor = () => {
-        const supervisor = users.find(s => s.userId===user.supervisorId)
+        const supervisor = users.find(s => s.userId === user.supervisorId)
         return (supervisor) ? <Link to={`/user/${user.supervisorId}/details`}>{supervisor.fullName}</Link> : "";
     }
 
     const showDepartment = () => {
-        const department = departments.find(s => s.departmentId===user.departmentId)
+        const department = departments.find(s => s.departmentId === user.departmentId)
         return (department) ? department.departmentName : "";
     }
 
     const showRole = () => {
-        const role = roles.find(s => s.roleId===user.roleId)
+        const role = roles.find(s => s.roleId === user.roleId)
         return (role) ? role.roleName : "";
     }
 
     const showExpLvl = () => {
-        const exp = expLvlList.find(s => s.expId===user.experienceLevelId)
+        const exp = expLvlList.find(s => s.expId === user.experienceLevelId)
         return (exp) ? exp.expLevel : "";
     }
 
     const ticketToParams = () => {
-        const inputFields = TEXT_FIELDS.map(field => ({name: field.label, value: 
-            <HiddenElement hidden={!edit} ifHidden={user[field.name]}>
-                <input value={updatedUser[field.name]} onInput={e => onChange(field.name, e.target.value)}></input>
-            </HiddenElement>
+        const inputFields = TEXT_FIELDS.map(field => ({
+            name: field.label, value:
+                <HiddenElement hidden={!edit} ifHidden={user[field.name]}>
+                    <input value={updatedUser[field.name]} onInput={e => onChange(field.name, e.target.value)}></input>
+                </HiddenElement>
         }))
 
-        return [{name: "Number", value: user.userId}, ...inputFields,
-            {name: "Group", value:   
-                        <HiddenElement hidden={!edit} ifHidden={showGroup()}>
-                            <Select
-                                keyName="groupId"
-                                valueName="groupName"
-                                objects={groups}
-                                name="groupId"
-                                id="groupId"
-                                key="groupName"
-                                onSelect={e => onChange("groupId", e.target.value)}
-                                required={false}
-                                selectedValue={updatedUser.groupId}
-                                emptyOptionEnabled={true}
-                            />
-                        </HiddenElement>           
-            },
-            {name: "Department", value:   
+        return [{ name: "Number", value: user.userId }, ...inputFields,
+        {
+            name: "Group", value:
+                <HiddenElement hidden={!edit} ifHidden={showGroup()}>
+                    <Select
+                        keyName="groupId"
+                        valueName="groupName"
+                        objects={groups}
+                        name="groupId"
+                        id="groupId"
+                        key="groupName"
+                        onSelect={e => onChange("groupId", e.target.value)}
+                        required={false}
+                        selectedValue={updatedUser.groupId}
+                        emptyOptionEnabled={true}
+                    />
+                </HiddenElement>
+        },
+        {
+            name: "Department", value:
                 <HiddenElement hidden={!edit} ifHidden={showDepartment()}>
                     <Select
-                     keyName="departmentId" 
-                    valueName="departmentName" 
-                    objects={departments} 
-                    name="departmentId"
-                     key="departmentName" 
-                     onSelect={e => onChange("departmentId", e.target.value)} 
-                     required={true}
-                     selectedValue={user.departmentId}
-                     />
-                </HiddenElement>           
-            },
-            {name: "Experience Level", value:   
+                        keyName="departmentId"
+                        valueName="departmentName"
+                        objects={departments}
+                        name="departmentId"
+                        key="departmentName"
+                        onSelect={e => onChange("departmentId", e.target.value)}
+                        required={true}
+                        selectedValue={user.departmentId}
+                    />
+                </HiddenElement>
+        },
+        {
+            name: "Experience Level", value:
                 <HiddenElement hidden={!edit} ifHidden={showExpLvl()}>
                     <Select
-                     keyName="expId" 
-                     valueName="expLevel" 
-                     objects={expLvlList} 
-                     name="expId"
-                     key="exp" 
-                     onSelect={e => onChange("experienceLevelId", e.target.value)} 
-                     required={true}
-                     selectedValue={user.experienceLevelId}
-                     />
-                </HiddenElement>           
-            },
-            {name: "Role", value: 
+                        keyName="expId"
+                        valueName="expLevel"
+                        objects={expLvlList}
+                        name="expId"
+                        key="exp"
+                        onSelect={e => onChange("experienceLevelId", e.target.value)}
+                        required={true}
+                        selectedValue={user.experienceLevelId}
+                    />
+                </HiddenElement>
+        },
+        {
+            name: "Role", value:
                 <HiddenElement hidden={!edit} ifHidden={showRole()}>
                     <Select
                         keyName="roleId"
@@ -193,9 +203,10 @@ const UserDetails = () => {
                         selectedValue={updatedUser.roleId}
                         required={true}
                     />
-                </HiddenElement>      
-            },
-            {name: "Supervisor", value:   
+                </HiddenElement>
+        },
+        {
+            name: "Supervisor", value:
                 <HiddenElement hidden={!edit} ifHidden={showSupervisor()}>
                     <Select
                         keyName="userId"
@@ -209,18 +220,18 @@ const UserDetails = () => {
                         selectedValue={updatedUser.supervisorId}
                         required={false}
                     />
-                      <button onClick={confirmChangeStage}>Save</button>
-                </HiddenElement>           
-    }
+                    <button onClick={confirmChangeStage}>Save</button>
+                </HiddenElement>
+        }
         ]
     }
 
-    const getDashboard = async (selectedUserId=null) => {
-        setDashboard(await getListWithParams(URLS.Dashboard, {userId: selectedUserId}, token))
+    const getDashboard = async (selectedUserId = null) => {
+        setDashboard(await getListWithParams(URLS.Dashboard, { userId: selectedUserId }, token))
     }
 
-    const getDevices = async (selectedUserId=null) => {
-        setDevices(await getListWithParams(URLS.Devices, {userId: selectedUserId}, token))
+    const getDevices = async (selectedUserId = null) => {
+        setDevices(await getListWithParams(URLS.Devices, { userId: selectedUserId }, token))
     }
 
     const getStages = async () => {
@@ -229,25 +240,25 @@ const UserDetails = () => {
 
     const getStageName = (stageId) => {
         const stage = stages.find(s => s.stageId === stageId)
-        if(stage) {
+        if (stage) {
             return stage.stageName
         } else {
             return null
         }
-    } 
+    }
 
     const onChangeSelectedDevice = (fieldName, deviceId) => {
         setSelectedDevice(deviceId)
     }
 
     const attachDevice = async () => {
-        if(selectedDevice != null) {
+        if (selectedDevice != null) {
             const body = {
                 userId: id,
                 deviceId: selectedDevice
             }
-            const {ok, data, error} = await post(URLS.AttachDevice, body, token)
-            if(ok) {
+            const { ok, data, error } = await post(URLS.AttachDevice, body, token)
+            if (ok) {
                 setSelectedDevice(null)
                 getDevices(id)
                 getNotAttachedDevices()
@@ -272,29 +283,36 @@ const UserDetails = () => {
     }, [id])
 
     return <div>
-        {user && 
-        <div>
-            <h1>User details <button onClick={toggleEdit}>Edit</button></h1>
-            <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
-                {ticketToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
-            </CommonTable>
-            
-            <h2>Tickets and applications</h2>
-            
-            <CommonTable headers={["Type", "Id", "User", "SLA", "Stage"]}>
-                {dashboard.map(job => <TableRow key={job.jobId} elements={[job.jobType, (<Link to={"/" + job.jobType + "/" + job.jobId + "/details"}>{job.jobId}</Link>), job.fullName, job.sla, getStageName(job.stageId)]} />)}
-            </CommonTable>
-
-            <h2>Devices</h2>
+        {user &&
             <div>
-                <CommonForm devicesList={notAttachedDevices} onChange={onChangeSelectedDevice}/>
-                <button onClick={attachDevice}>Attach device</button>
-            </div>
+                <h1>User details {canEditUser(token) && <button onClick={toggleEdit}>Edit</button>}</h1>
+                <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
+                    {ticketToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
+                </CommonTable>
 
-            <CommonTable headers={["Device type",	"Brand",	"Model",	"Serial number"]}>
-                {devices.map(dev => <TableRow key={dev.deviceId} elements={[dev.deviceTypeName, dev.brand, dev.model, <Link to={`/device/${dev.deviceId}/details`}>{dev.serialNumber}</Link>]} />)}
-            </CommonTable>
-        </div>}
+                <h2>Tickets and applications</h2>
+
+                <CommonTable headers={["Type", "Id", "User", "SLA", "Stage"]}>
+                    {dashboard.map(job => <TableRow key={job.jobId} elements={[
+                        job.jobType,
+                        (<Link to={"/" + job.jobType + "/" + job.jobId + "/details"}>{job.jobId}</Link>),
+                        job.fullName,
+                        job.sla,
+                        getStageName(job.stageId)]} />)}
+                </CommonTable>
+
+                <h2>Devices</h2>
+
+                {canAttachDevice(token) &&
+                    <div>
+                        <CommonForm devicesList={notAttachedDevices} onChange={onChangeSelectedDevice} />
+                        <button onClick={attachDevice}>Attach device</button>
+                    </div>}
+
+                <CommonTable headers={["Device type", "Brand", "Model", "Serial number"]}>
+                    {devices.map(dev => <TableRow key={dev.deviceId} elements={[dev.deviceTypeName, dev.brand, dev.model, <Link to={`/device/${dev.deviceId}/details`}>{dev.serialNumber}</Link>]} />)}
+                </CommonTable>
+            </div>}
     </div>
 }
 

@@ -7,12 +7,12 @@ import TableRow from "../common/TableRow.component"
 
 const Logs = () => {
     const [logs, setLogs] = useState([])
-    const {token} = useContext(TokenContext)
-    
+    const { token } = useContext(TokenContext)
+
     const getLogs = async () => {
         setLogs(await getList(URLS.AllLogs, token))
     }
-    
+
     useEffect(() => {
         getLogs()
     }, [])

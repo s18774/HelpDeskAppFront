@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import CommonForm from "../common/CommonForm.component"
 import { getList, URLS } from "../../api/urls"
-import { canAddTicketForAnotherUser, canAttachHelpdeskUser, canCreateNewDevice, getUserFromToken } from '../../api/roles'
+import { canCreateNewDevice } from '../../api/roles'
 import TokenContext from "../../context/TokenContext"
 import toast from "react-hot-toast"
 import { post } from "../../api/requests"

@@ -1,5 +1,4 @@
 import axios from "axios"
-import Ticket from "../components/Ticket/Ticket.component"
 
 const BASE_ADDRESS = "http://localhost:8080/api/v1/"
 

@@ -6,9 +6,9 @@ import toast from "react-hot-toast"
 import { useContext } from "react"
 import TokenContext from "../../context/TokenContext"
 
-const Login =  () => {
+const Login = () => {
     const navigate = useNavigate()
-    const {setToken} = useContext(TokenContext)
+    const { setToken } = useContext(TokenContext)
 
     const handleForm = async (e) => {
         e.preventDefault()
@@ -16,14 +16,14 @@ const Login =  () => {
         let body = Object.fromEntries(formData)
         try {
             let response = await axios.post(URLS.Auth, body)
-            if(response.status === 200) {
+            if (response.status === 200) {
                 toast.success("OK")
                 setToken(response.data)
                 navigate("/application")
             } else {
                 toast.error("Błąd")
             }
-        }catch(err) {
+        } catch (err) {
             console.log(err)
             toast.error("Błąd")
         }

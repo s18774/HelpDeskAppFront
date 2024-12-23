@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import CommonForm from "../common/CommonForm.component"
 import { getList, URLS } from "../../api/urls"
-import { canAddTicketForAnotherUser, canAttachHelpdeskUser, canCreateNewDevice, getUserFromToken } from '../../api/roles'
+import { canCreateUser } from '../../api/roles'
 import TokenContext from "../../context/TokenContext"
 import toast from "react-hot-toast"
 import { post } from "../../api/requests"
@@ -95,7 +95,7 @@ const CreateUser = () => {
     }
 
     return (
-        canCreateNewDevice(token) &&
+        canCreateUser(token) &&
         <div>
             <h1>New user</h1>
             <button onClick={onAddUser}>Save</button>

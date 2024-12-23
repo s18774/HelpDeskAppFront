@@ -9,18 +9,19 @@ import TableRow from "../common/TableRow.component"
 import Select from "../common/Select.component"
 import HiddenElement from "../common/HiddenElement.component"
 import Modal from 'react-modal'
+import { canEditApplication } from "../../api/roles"
 
 
 const modalStyle = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
     },
-  };
+};
 
 
 const ApplicationDetails = () => {
@@ -35,12 +36,12 @@ const ApplicationDetails = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [editStatus, setEditStatus] = useState(false)
 
-    const {id} = useParams()
-    const {token} = useToken()
+    const { id } = useParams()
+    const { token } = useToken()
 
     const getApplication = async () => {
-        const {ok, data, error} = await get(URLS.GetApplication.replace("{applicationId}", id), token)
-        if(ok) {
+        const { ok, data, error } = await get(URLS.GetApplication.replace("{applicationId}", id), token)
+        if (ok) {
             data.slaId = data.sla
             setApplication(data)
             setUpdatedApplication(data)
@@ -59,7 +60,7 @@ const ApplicationDetails = () => {
     }
 
     const onChange = (key, value) => {
-        setUpdatedApplication({...updatedApplication, [key]: value})
+        setUpdatedApplication({ ...updatedApplication, [key]: value })
     }
 
     const getHelpdesk = async () => {
@@ -71,8 +72,8 @@ const ApplicationDetails = () => {
     }
 
     const confirmChangeStage = async () => {
-        const {ok, data, error} = await put(URLS.Applications, updatedApplication, token)
-        if(ok) {
+        const { ok, data, error } = await put(URLS.Applications, updatedApplication, token)
+        if (ok) {
             toast.success("Updated!")
             setEdit(false)
             setEditStatus(false)
@@ -84,101 +85,107 @@ const ApplicationDetails = () => {
     }
 
     const toggleEdit = () => {
-       setEdit(!edit)
+        setEdit(!edit)
     }
 
     useEffect(() => {
-        if(edit) {
+        if (edit) {
             setUpdatedApplication(application)
         }
     }, [edit])
 
     const showStage = () => {
-        const stage = stages.find(s => s.stageId===application.stageId)
+        const stage = stages.find(s => s.stageId === application.stageId)
         return stage ? stage.stageName : ""
     }
 
     const showHelpdesk = () => {
-        const helpdesk = helpdeskList.find(s => s.userId===application.helpdeskId)
-        return helpdesk ?  <Link to={`/user/${application.helpdeskId}/details`}>{helpdesk.fullName}</Link> : ""
+        const helpdesk = helpdeskList.find(s => s.userId === application.helpdeskId)
+        return helpdesk ? <Link to={`/user/${application.helpdeskId}/details`}>{helpdesk.fullName}</Link> : ""
     }
 
     const showGroup = () => {
-        const group = groupList.find(s => s.groupId===application.groupId)
+        const group = groupList.find(s => s.groupId === application.groupId)
         return group ? <Link to={`/group/${application.groupId}/details`}>{group.groupName}</Link> : ""
     }
 
     const applicationToParams = () => {
         return [
-            {name: "Number", value: application.applicationId},
-            {name: "SLA", value: 
-                <HiddenElement hidden={!edit} ifHidden={application.sla}>
-                    <Select keyName="slaId" emptyOptionEnabled={false} valueName="slaLevel" selectedValue={updatedApplication.sla} objects={slaList} name="slaId" key="sla" onSelect={e => onChange("slaId", e.target.value)} required={true} />
-                </HiddenElement>
+            { name: "Number", value: application.applicationId },
+            {
+                name: "SLA", value:
+                    <HiddenElement hidden={!edit} ifHidden={application.sla}>
+                        <Select keyName="slaId" emptyOptionEnabled={false} valueName="slaLevel" selectedValue={updatedApplication.sla} objects={slaList} name="slaId" key="sla" onSelect={e => onChange("slaId", e.target.value)} required={true} />
+                    </HiddenElement>
             },
-            {name: "Opening date", value: application.openingDate},
-            {name: "Closing date", value: application.closingDate},
-            {name: "Subject", value: 
-                <HiddenElement hidden={!edit} ifHidden={application.subject}>
-                    <input value={updatedApplication.subject} onInput={e => onChange("subject", e.target.value)}></input>
-                </HiddenElement>
+            { name: "Opening date", value: application.openingDate },
+            { name: "Closing date", value: application.closingDate },
+            {
+                name: "Subject", value:
+                    <HiddenElement hidden={!edit} ifHidden={application.subject}>
+                        <input value={updatedApplication.subject} onInput={e => onChange("subject", e.target.value)}></input>
+                    </HiddenElement>
             },
-            {name: "Description", value: 
-                <HiddenElement hidden={!edit} ifHidden={application.description}>
-                    <input value={updatedApplication.description} onInput={e => onChange("description", e.target.value)}></input>
-                </HiddenElement>
+            {
+                name: "Description", value:
+                    <HiddenElement hidden={!edit} ifHidden={application.description}>
+                        <input value={updatedApplication.description} onInput={e => onChange("description", e.target.value)}></input>
+                    </HiddenElement>
             },
-            {name: "User", value: <Link to={`/user/${application.userId}/details`}>{application.fullName}</Link>
+            {
+                name: "User", value: <Link to={`/user/${application.userId}/details`}>{application.fullName}</Link>
             },
-            {name: "Helpdesk", value:   
-                <HiddenElement hidden={!edit} ifHidden={showHelpdesk()}>
-                    <Select
-                        keyName="userId"
-                        valueName="fullName"
-                        objects={helpdeskList}
-                        name="userId"
-                        id="userId"
-                        key="user"
-                        onSelect={e => onChange("helpdeskId", e.target.value)}
-                        required={false}
-                        selectedValue={updatedApplication.helpdeskId}
-                        emptyOptionEnabled={true}
-                    />
-                </HiddenElement>           
+            {
+                name: "Helpdesk", value:
+                    <HiddenElement hidden={!edit} ifHidden={showHelpdesk()}>
+                        <Select
+                            keyName="userId"
+                            valueName="fullName"
+                            objects={helpdeskList}
+                            name="userId"
+                            id="userId"
+                            key="user"
+                            onSelect={e => onChange("helpdeskId", e.target.value)}
+                            required={false}
+                            selectedValue={updatedApplication.helpdeskId}
+                            emptyOptionEnabled={true}
+                        />
+                    </HiddenElement>
             },
-            {name: "Group", value:   
-                <HiddenElement hidden={!edit} ifHidden={showGroup()}>
-                    <Select
-                        keyName="groupId"
-                        valueName="groupName"
-                        objects={groupList}
-                        name="groupId"
-                        id="groupId"
-                        key="group"
-                        onSelect={e => onChange("groupId", e.target.value)}
-                        required={true}
-                        selectedValue={updatedApplication.groupId}
-                        emptyOptionEnabled={true}
-                    />
-                </HiddenElement>           
+            {
+                name: "Group", value:
+                    <HiddenElement hidden={!edit} ifHidden={showGroup()}>
+                        <Select
+                            keyName="groupId"
+                            valueName="groupName"
+                            objects={groupList}
+                            name="groupId"
+                            id="groupId"
+                            key="group"
+                            onSelect={e => onChange("groupId", e.target.value)}
+                            required={true}
+                            selectedValue={updatedApplication.groupId}
+                            emptyOptionEnabled={true}
+                        />
+                    </HiddenElement>
             },
-            {name: "Status", value:   
-                        <HiddenElement hidden={!edit && !editStatus} ifHidden={showStage()}>
-                            <Select
-                                keyName="stageId"
-                                valueName="stageName"
-                                objects={stages}
-                                name="stageId"
-                                id="stageId"
-                                key="stageName"
-                                onSelect={e => onChange("stageId", e.target.value)}
-                                required={true}
-                                selectedValue={updatedApplication.stageId}
-                                emptyOptionEnabled={false}
-                            />
-                            {/* <button onClick={confirmChangeStage}>Save</button> */}
-                        </HiddenElement>           
-                    },
+            {
+                name: "Status", value:
+                    <HiddenElement hidden={!edit && !editStatus} ifHidden={showStage()}>
+                        <Select
+                            keyName="stageId"
+                            valueName="stageName"
+                            objects={stages}
+                            name="stageId"
+                            id="stageId"
+                            key="stageName"
+                            onSelect={e => onChange("stageId", e.target.value)}
+                            required={true}
+                            selectedValue={updatedApplication.stageId}
+                            emptyOptionEnabled={false}
+                        />
+                    </HiddenElement>
+            },
         ]
     }
 
@@ -199,15 +206,15 @@ const ApplicationDetails = () => {
     }
 
     const toggleEditStatus = () => {
-        if(edit) {
+        if (edit) {
             return
         }
         setEditStatus(!editStatus)
     }
 
     const onSubmitCloseApplication = async () => {
-        const {ok, data, error} = await post(URLS.CloseApplication.replace("{applicationId}", id), {}, token)
-        if(ok) {
+        const { ok, data, error } = await post(URLS.CloseApplication.replace("{applicationId}", id), {}, token)
+        if (ok) {
             toast.success("Success")
             getApplication()
             closeModal()
@@ -217,32 +224,33 @@ const ApplicationDetails = () => {
     }
 
     return <div>
-        {application && 
-        <div>
-            <h1>Application details  {showStage() === "Closed" ? <span>(closed)</span> :
-            <span>
+        {application &&
+            <div>
+                <h1>Application details  {showStage() === "Closed" ? <span>(closed)</span> :
+                    canEditApplication(token) &&
+                    <span>
 
-<button onClick={toggleEdit}>Edit</button>
-{showStage() !== "Closed" && <button onClick={toggleEditStatus}>Change Status</button>}
-{showStage() !== "Closed" && <button onClick={closeApplication}>Close application</button>}
-            </span>
-        }</h1>
-            <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
-                {applicationToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
-            </CommonTable>
+                        <button onClick={toggleEdit}>Edit</button>
+                        {showStage() !== "Closed" && <button onClick={toggleEditStatus}>Change Status</button>}
+                        {showStage() !== "Closed" && <button onClick={closeApplication}>Close application</button>}
+                    </span>
+                }</h1>
+                <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
+                    {applicationToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
+                </CommonTable>
 
-            <HiddenElement hidden={!edit && !editStatus} ifHidden={() => ""}>
-                            <button onClick={confirmChangeStage}>Save</button>
-                        </HiddenElement>       
-        </div>}
+                <HiddenElement hidden={!edit && !editStatus} ifHidden={() => ""}>
+                    <button onClick={confirmChangeStage}>Save</button>
+                </HiddenElement>
+            </div>}
 
         <Modal isOpen={modalIsOpen} style={modalStyle}>
             Are you sure??
             <div>
-            <button onClick={onSubmitCloseApplication}>Yes</button>
-            <button onClick={closeModal}>No</button>
+                <button onClick={onSubmitCloseApplication}>Yes</button>
+                <button onClick={closeModal}>No</button>
             </div>
-        </Modal>    
+        </Modal>
     </div>
 }
 

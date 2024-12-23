@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import Login from "../Login/Login.component"
 import Application from '../Application/Application.component'
 import Logout from "../Logout/Logout.component"
@@ -19,6 +19,7 @@ import GroupDetails from "../GroupDetails/GroupDetails.component"
 import Report from "../Report/Report.component"
 import DeviceDetails from "../DeviceDetails/DeviceDetails.component"
 import Logs from "../Logs/Logs.component"
+
 
 const Content = () => {
     return <div>

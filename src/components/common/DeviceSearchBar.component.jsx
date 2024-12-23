@@ -3,7 +3,6 @@ import "./SearchBar.component.css"
 import { useContext, useEffect, useState } from "react";
 import { URLS, getList } from "../../api/urls";
 import TokenContext from "../../context/TokenContext";
-import JOB_TYPES from "../../api/jobTypes";
 
 const DeviceSearchBar = ({entityName, onSubmit}) => {
     const gridStyle = {

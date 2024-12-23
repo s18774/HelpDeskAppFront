@@ -35,6 +35,11 @@ export const canCreateUser = (token) => {
     return isAdmin(data)
 }
 
+export const canEditUser = (token) => {
+    const data = decodeToken(token)
+    return isAdmin(data) || isHelpdesk(data)
+}
+
 export const canSeeAllUsers = (token) => {
     const data = decodeToken(token)
     return isAdmin(data)
@@ -46,6 +51,11 @@ export const canRemoveUserFromGroup = (token) => {
 }
 
 export const canAttachHelpdeskUser = (token) => {
+    const data = decodeToken(token)
+    return isAdmin(data)
+}
+
+export const canAttachDevice = (token) => {
     const data = decodeToken(token)
     return isAdmin(data)
 }
@@ -65,12 +75,20 @@ export const canSeeGroups = (token) => {
     return isAdmin(data) || isHelpdesk(data)
 }
 
+export const canEditTicket = (token) => {
+    const data = decodeToken(token)
+    return isAdmin(data) || isHelpdesk(data) 
+}
+
+export const canEditApplication = (token) => {
+    const data = decodeToken(token)
+    return isAdmin(data) || isHelpdesk(data) 
+}
+
 export const getUserFromToken = (token) => {
     const data = decodeToken(token)
     return data
 }
-
-
 
 export const getRoleName = (roleId) => {
     const roleNames =  Object.keys(ROLES)

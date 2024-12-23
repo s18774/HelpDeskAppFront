@@ -10,7 +10,6 @@ import { canCreateNewDevice } from '../../api/roles';
 
 const Device = () => {
     const [devices, setDevices] = useState([])
-    const [anotherUser, setAnotherUser] = useState(false)
 
     const {token} = useContext(TokenContext)
     const navigate = useNavigate()
@@ -27,7 +26,7 @@ const Device = () => {
     return <div>
         <h1>Devices</h1>
 
-        {canCreateNewDevice(token) &&
+        {token != null && canCreateNewDevice(token) &&
         <button onClick={() => navigate("/device/create")}>Create device</button>}
 
         <DeviceSearchBar onSubmit={getDevices}/>
