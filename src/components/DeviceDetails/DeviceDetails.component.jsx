@@ -8,6 +8,7 @@ import CommonTable from "../common/CommonTable.component"
 import TableRow from "../common/TableRow.component"
 import Select from "../common/Select.component"
 import HiddenElement from "../common/HiddenElement.component"
+import { canEditDevice } from "../../api/roles"
 
 
 const DeviceDetails = () => {
@@ -122,7 +123,7 @@ const DeviceDetails = () => {
     return <div>
         {device &&
             <div>
-                <h1>Device details    <button onClick={toggleEdit}>Edit</button></h1>
+                <h1>Device details {canEditDevice(token) && <button onClick={toggleEdit}>Edit</button>}</h1>
                 <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
                     {deviceToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
                 </CommonTable>

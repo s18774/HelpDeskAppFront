@@ -7,7 +7,7 @@ import toast from "react-hot-toast"
 import CommonTable from "../common/CommonTable.component"
 import TableRow from "../common/TableRow.component"
 import HiddenElement from "../common/HiddenElement.component"
-import { canRemoveUserFromGroup } from "../../api/roles"
+import { canEditGroup, canRemoveUserFromGroup } from "../../api/roles"
 import CommonForm from "../common/CommonForm.component"
 
 
@@ -128,15 +128,16 @@ const GroupDetails = () => {
     return <div>
         {group &&
             <div>
-                <h1>Group details <button onClick={toggleEdit}>Edit</button></h1>
+                <h1>Group details {canEditGroup(token) && <button onClick={toggleEdit}>Edit</button>}</h1>
                 <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
                     {groupToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
                 </CommonTable>
                 <h2>Helpdesk users</h2>
+                {canEditGroup(token) &&
                 <div>
                     <CommonForm helpdeskList={helpdesks} onChange={onChangeForm} />
                     <button onClick={addHelpdesk}>Add helpdesk</button>
-                </div>
+                </div>}
                 <CommonTable headers={["First Name", "Second Name", "Position", "Action"]}>
                     {users.map(user => <TableRow key={user.userId} elements={
                         [

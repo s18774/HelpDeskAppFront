@@ -216,6 +216,8 @@ const ApplicationDetails = () => {
         const { ok, data, error } = await post(URLS.CloseApplication.replace("{applicationId}", id), {}, token)
         if (ok) {
             toast.success("Success")
+            setEdit(false)
+            setEditStatus(false)
             getApplication()
             closeModal()
         } else {

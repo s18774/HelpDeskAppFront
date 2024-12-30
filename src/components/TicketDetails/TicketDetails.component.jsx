@@ -186,6 +186,8 @@ const TicketDetails = () => {
             toast.success("Success")
             getTicket()
             closeModal()
+            setEdit(false)
+            setEditStatus(false)
         } else {
             toast.error("Failed to close ticket")
         }
