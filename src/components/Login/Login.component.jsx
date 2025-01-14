@@ -36,7 +36,7 @@ const Login = () => {
             <input name="username" id="username"></input>
             <label for="password">Password</label>
             <input name="password" id="password" type="password"></input>
-            <button type="submit">Login</button>
+            <button class="btn btn-primary" type="submit">Login</button>
         </form>
     </div>
 }

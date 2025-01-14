@@ -55,7 +55,7 @@ const Ticket = () => {
         <h1>Tickets</h1>
 
         {token != null &&
-            <button onClick={() => navigate("/ticket/create")}>Create ticket</button>}
+            <button class="btn btn-primary" onClick={() => navigate("/ticket/create")}>Create ticket</button>}
 
         {stages.length > 0 &&
             <SearchBar onSubmit={getTickets} stage={getOpenStageId()} />}

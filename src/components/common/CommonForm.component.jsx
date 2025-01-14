@@ -193,7 +193,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
             {passwordField && <>
                 <RequiredField htmlFor="password" name="Password" required={isRquired("password")} />
                 <input type="password" name="password" id="password" value={password} onInput={e => onPasswordChange(e.target.value)} required></input>
-                <button type="button" onClick={generatePassword}>Generate password</button>
+                <button type="button" class="btn btn-primary" onClick={generatePassword}>Generate password</button>
                 {createdPassword && <div>Password: {createdPassword}</div>}
             </>}
         </form>

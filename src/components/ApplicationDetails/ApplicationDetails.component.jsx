@@ -232,7 +232,7 @@ const ApplicationDetails = () => {
                     canEditApplication(token) &&
                     <span>
 
-                        <button onClick={toggleEdit}>Edit</button>
+                        <button onClick={toggleEdit} class="btn btn-primary">Edit</button>
                         {showStage() !== "Closed" && <button onClick={toggleEditStatus}>Change Status</button>}
                         {showStage() !== "Closed" && <button onClick={closeApplication}>Close application</button>}
                     </span>

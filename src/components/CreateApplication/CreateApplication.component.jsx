@@ -84,8 +84,8 @@ const CreateApplication = () => {
     return (
         <div>
             <h1>New application</h1>
-            <button onClick={onAddApplication}>Save</button>
-            <button onClick={onBackToApplicationList}>Back</button>
+            <button class="btn btn-primary" onClick={onAddApplication}>Save</button>
+            <button class="btn btn-primary" onClick={onBackToApplicationList}>Back</button>
             <CommonForm
                 usersList={usersList}
                 slaList={slaList}

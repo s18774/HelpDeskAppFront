@@ -1,5 +1,5 @@
 const CommonTable = ({children, headers=[], hideHeaders=false}) => {
-   return ( <table style={{width: "100%"}}>
+   return ( <table className="table table-striped">
     {!hideHeaders &&
     <thead>
         <tr>

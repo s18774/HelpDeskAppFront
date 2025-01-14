@@ -38,7 +38,7 @@ const DeviceSearchBar = ({entityName, onSubmit}) => {
     }, [])
 
     return ( <div className="rounded search-box">
-        <button className="right" onClick={onSubmitSearch}>Search</button>
+        <button class="btn btn-primary" className="right" onClick={onSubmitSearch}>Search</button>
         <div className="grid-box" style={gridStyle}>
             <label>Device Type</label>
             <label>Brand</label>

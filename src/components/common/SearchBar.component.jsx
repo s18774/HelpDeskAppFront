@@ -48,7 +48,7 @@ const SearchBar = ({entityName, onSubmit, jobType=false, stage=null}) => {
     }, [])
 
     return ( <div className="rounded search-box">
-        <button className="right" onClick={onSubmitSearch}>Search</button>
+        <button className="right btn btn-primary" onClick={onSubmitSearch}>Search</button>
         <div className="grid-box" style={gridStyle}>
             {jobType && <label>Type</label>}
             <label>{entityName} number</label>
