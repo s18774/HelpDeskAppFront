@@ -47,12 +47,20 @@ const CreateGroup = () => {
     return (
         canCreateNewGroup(token) &&
         <div>
-            <h1>New group</h1>
-            <button onClick={onAddGroup}>Save</button>
-            <button onClick={onBackToDeviceList}>Back</button>
+            <h1 className="text-center m-2 mb-3">New group</h1>
+
+            <div className="d-flex flex-column justify-content-center align-items-center">
+
+
             <CommonForm
                 onChange={onChangeForm}
                 fields={FORM_FIELDS} />
+
+                <div>
+                <button className="btn btn-primary m-1" onClick={onAddGroup}>Save</button>
+                <button className="btn btn-primary m-1" onClick={onBackToDeviceList}>Back</button>
+                </div>
+                    </div>
         </div>
 
     )

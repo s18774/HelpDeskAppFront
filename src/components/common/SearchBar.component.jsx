@@ -5,9 +5,9 @@ import { URLS, getList } from "../../api/urls";
 import TokenContext from "../../context/TokenContext";
 import JOB_TYPES from "../../api/jobTypes";
 
-const SearchBar = ({entityName, onSubmit, jobType=false, stage=null}) => {
+const SearchBar = ({entityName, onSubmit, jobType=false, stage=null, additionalButton=null}) => {
     const gridStyle = {
-        gridTemplateColumns: "1fr 1fr 1fr 1fr" + (jobType ? " 1fr" : "")
+        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" + (jobType ? " 1fr" : "")
     }
     
     const [slaList, setSlaList] = useState([])
@@ -47,20 +47,21 @@ const SearchBar = ({entityName, onSubmit, jobType=false, stage=null}) => {
         getStages()
     }, [])
 
-    return ( <div className="rounded search-box">
-        <button className="right btn btn-primary" onClick={onSubmitSearch}>Search</button>
+    return ( <div className="border border-primary rounded m-2 p-3">
         <div className="grid-box" style={gridStyle}>
             {jobType && <label>Type</label>}
             <label>{entityName} number</label>
             <label>User</label>
             <label>SLA</label>
             <label>Stage</label>
+            {additionalButton != null ? additionalButton : <label></label>}
 
             {jobType && <Select keyName="name" valueName="name" objects={JOB_TYPES} name="jobType" key="jobType" onSelect={e =>setSelectedJobType(e.target.value) }/>}
-            <input value={selectedId} onInput={e => setSelectedId(e.target.value)}></input>
+            <input className="form-select" value={selectedId} onInput={e => setSelectedId(e.target.value)}></input>
             <Select keyName="userId" valueName="fullName" objects={usersList} name="user" key="user" onSelect={e => setSelectedUserId(e.target.value)} />
             <Select keyName="slaId" valueName="slaLevel" objects={slaList} name="sla" key="sla" onSelect={e => setSelectedSlaId(e.target.value)}/>
             <Select keyName="stageId" valueName="stageName" objects={stages} name="stage" key="stage" selectedValue={selectedStageId} onSelect={e => setSelectedStageId(e.target.value)}/>
+            <button className="btn btn-primary" onClick={onSubmitSearch}>Search</button>
         </div>
     </div>)
 }

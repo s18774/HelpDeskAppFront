@@ -4,9 +4,9 @@ import { useContext, useEffect, useState } from "react";
 import { URLS, getList } from "../../api/urls";
 import TokenContext from "../../context/TokenContext";
 
-const DeviceSearchBar = ({entityName, onSubmit}) => {
+const DeviceSearchBar = ({entityName, onSubmit, additionalButton=null}) => {
     const gridStyle = {
-        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr"
+        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr"
     }
     
     const [deviceTypeList, setDeviceTypeList] = useState([])
@@ -37,21 +37,22 @@ const DeviceSearchBar = ({entityName, onSubmit}) => {
         getDeviceTypes()
     }, [])
 
-    return ( <div className="rounded search-box">
-        <button class="btn btn-primary" className="right" onClick={onSubmitSearch}>Search</button>
+    return ( <div className="border border-primary rounded m-2 p-3">
         <div className="grid-box" style={gridStyle}>
             <label>Device Type</label>
             <label>Brand</label>
             <label>Model</label>
             <label>Serial Number</label>
             <label>User</label>
+            {additionalButton != null ? additionalButton : <label></label>}
 
             <Select keyName="deviceTypeId" valueName="typeDescription" objects={deviceTypeList} name="deviceType" key="deviceType" onSelect={e => setSelectedDeviceTypeId(e.target.value)}/>
-            <input value={selectedBrand} onInput={e => setSelectedBrand(e.target.value)}></input>
-            <input value={selectedModel} onInput={e => setSelectedModel(e.target.value)}></input>
-            <input value={selectedSerialNumber} onInput={e => setSelectedSerialNumber(e.target.value)}></input>
+            <input className="form-control" value={selectedBrand} onInput={e => setSelectedBrand(e.target.value)}></input>
+            <input className="form-control" value={selectedModel} onInput={e => setSelectedModel(e.target.value)}></input>
+            <input className="form-control" value={selectedSerialNumber} onInput={e => setSelectedSerialNumber(e.target.value)}></input>
             <Select keyName="userId" valueName="fullName" objects={usersList} name="user" key="user" onSelect={e => setSelectedUserId(e.target.value)} />
-        </div>
+            <button className="btn btn-primary" onClick={onSubmitSearch}>Search</button>
+       </div>
     </div>)
 }
 

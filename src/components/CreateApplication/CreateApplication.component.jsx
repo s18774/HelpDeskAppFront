@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom"
 
 const CreateApplication = () => {
     const FORM_FIELDS = [
-        {id: "title", label: "Title", type: "text", tag: "input", required: true},
-        {id: "description", label: "Description", type: "text", tag: "textarea", required: false}
+        { id: "title", label: "Title", type: "text", tag: "input", required: true },
+        { id: "description", label: "Description", type: "text", tag: "textarea", required: false }
     ]
 
     const [usersList, setUsersList] = useState([])
@@ -83,16 +83,22 @@ const CreateApplication = () => {
 
     return (
         <div>
-            <h1>New application</h1>
-            <button class="btn btn-primary" onClick={onAddApplication}>Save</button>
-            <button class="btn btn-primary" onClick={onBackToApplicationList}>Back</button>
-            <CommonForm
-                usersList={usersList}
-                slaList={slaList}
-                helpdeskList={helpdeskList}
-                groupList={groupList}
-                onChange={onChangeForm}
-                fields={FORM_FIELDS} />
+            <h1 className="text-center m-2 mb-3">New application</h1>
+            <div className="d-flex flex-column justify-content-center align-items-center">
+                <CommonForm
+                    usersList={usersList}
+                    slaList={slaList}
+                    helpdeskList={helpdeskList}
+                    groupList={groupList}
+                    onChange={onChangeForm}
+                    fields={FORM_FIELDS} />
+                <div>
+                    <button class="btn btn-primary m-1" onClick={onAddApplication}>Save</button>
+                    <button class="btn btn-primary m-1" onClick={onBackToApplicationList}>Back</button>
+                </div>
+            </div>
+
+
         </div>
 
     )

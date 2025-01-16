@@ -123,13 +123,13 @@ const TicketDetails = () => {
             {
                 name: "Title", value:
                     <HiddenElement hidden={!edit} ifHidden={ticket.title}>
-                        <input value={updatedTicket.title} onInput={e => onChange("title", e.target.value)}></input>
+                        <input className="form-control" value={updatedTicket.title} onInput={e => onChange("title", e.target.value)}></input>
                     </HiddenElement>
             },
             {
                 name: "Description", value:
                     <HiddenElement hidden={!edit} ifHidden={ticket.description}>
-                        <input value={updatedTicket.description} onInput={e => onChange("description", e.target.value)}></input>
+                        <input className="form-control" value={updatedTicket.description} onInput={e => onChange("description", e.target.value)}></input>
                     </HiddenElement>
             },
             {
@@ -207,9 +207,9 @@ const TicketDetails = () => {
 
                     canEditTicket(token) &&
                     <span>
-                        <button onClick={toggleEdit}>Edit</button>
-                        {showStage() !== "Closed" && <button onClick={toggleEditStatus}>Change Status</button>}
-                        {showStage() !== "Closed" && <button onClick={closeTicket}>Close ticket</button>}
+                        <button className="btn btn-primary m-1" onClick={toggleEdit}>Edit</button>
+                        {showStage() !== "Closed" && <button className="btn btn-primary m-1" onClick={toggleEditStatus}>Change Status</button>}
+                        {showStage() !== "Closed" && <button className="btn btn-primary m-1" onClick={closeTicket}>Close ticket</button>}
                     </span>
 
                 }</h1>
@@ -218,7 +218,7 @@ const TicketDetails = () => {
                 </CommonTable>
 
                 <HiddenElement hidden={!edit && !editStatus} ifHidden={() => ""}>
-                    <button onClick={confirmChangeStage}>Save</button>
+                    <button className="btn btn-primary m-2" onClick={confirmChangeStage}>Save</button>
                 </HiddenElement>
 
             </div>}

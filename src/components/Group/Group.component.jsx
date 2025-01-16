@@ -23,14 +23,18 @@ const Group = () => {
 
 
     return <div>
-        <h1>Groups</h1>
+        <h1 className="text-center m-2 mb-3">Groups</h1>
 
-        {canCreateNewDevice(token) &&
-            <button onClick={() => navigate("/group/create")}>Create group</button>}
 
-        <CommonTable headers={["Number", "Name", "Active"]}>
+
+        <div className="d-flex flex-column justify-content-center align-items-center">
+        <CommonTable headers={["Number", "Name", "Active"]} sx={"w-50"}>
             {groups.map(group => <TableRow key={group.groupId} elements={[<Link to={`/group/${group.groupId}/details`}>{group.groupId}</Link>, group.groupName, group.isGroupActive === 1 ? "Yes" : "No"]} />)}
         </CommonTable>
+        {canCreateNewDevice(token) &&
+            <button className='btn btn-primary' onClick={() => navigate("/group/create")}>Create group</button>}
+        </div>
+
     </div>
 }
 

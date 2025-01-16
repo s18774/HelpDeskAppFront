@@ -50,9 +50,12 @@ const Report = () => {
     }, [])
 
     return <div>
-        <h1>Reports</h1>
-        <CommonForm onChange={onChangeForm} helpdeskList={helpdesks} fields={FORM_FIELDS} jobList={[{ name: "all" }, ...JOB_TYPES]} />
-        <button onClick={generateReport}>Generate report</button>
+        <h1 className="text-center m-2 mb-3">Reports</h1>
+        <div className="d-flex flex-column justify-content-center align-items-center">
+            <CommonForm onChange={onChangeForm} helpdeskList={helpdesks} fields={FORM_FIELDS} jobList={[{ name: "all" }, ...JOB_TYPES]} />
+            <button className="btn btn-primary" onClick={generateReport}>Generate report</button>
+        </div>
+
     </div>
 }
 

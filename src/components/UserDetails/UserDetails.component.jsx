@@ -136,7 +136,7 @@ const UserDetails = () => {
         const inputFields = TEXT_FIELDS.map(field => ({
             name: field.label, value:
                 <HiddenElement hidden={!edit} ifHidden={user[field.name]}>
-                    <input value={updatedUser[field.name]} onInput={e => onChange(field.name, e.target.value)}></input>
+                    <input className="form-control" value={updatedUser[field.name]} onInput={e => onChange(field.name, e.target.value)}></input>
                 </HiddenElement>
         }))
 
@@ -220,7 +220,6 @@ const UserDetails = () => {
                         selectedValue={updatedUser.supervisorId}
                         required={false}
                     />
-                    <button onClick={confirmChangeStage}>Save</button>
                 </HiddenElement>
         }
         ]
@@ -285,7 +284,14 @@ const UserDetails = () => {
     return <div>
         {user &&
             <div>
-                <h1>User details {canEditUser(token) && <button onClick={toggleEdit}>Edit</button>}</h1>
+                <h1>User details 
+                    <span className="d-flex flex-row justify-content-end">
+                    {canEditUser(token) && <button className="btn btn-primary m-1" onClick={toggleEdit}>Edit</button>}
+                        <HiddenElement hidden={!edit}>
+                        <button className="btn btn-primary m-1" onClick={confirmChangeStage}>Save</button>
+                    </HiddenElement>
+                    </span>
+                </h1>
                 <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
                     {ticketToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
                 </CommonTable>

@@ -80,13 +80,13 @@ const DeviceDetails = () => {
             {
                 name: "IP Address", value:
                     <HiddenElement hidden={!edit} ifHidden={device.ipAddress}>
-                        <input value={updatedDevice.ipAddress} onInput={e => onChange("ipAddress", e.target.value)}></input>
+                        <input className="form-control" value={updatedDevice.ipAddress} onInput={e => onChange("ipAddress", e.target.value)}></input>
                     </HiddenElement>
             },
             {
                 name: "Inventory Number", value:
                     <HiddenElement hidden={!edit} ifHidden={device.inventoryNumber}>
-                        <input value={updatedDevice.inventoryNumber} onInput={e => onChange("inventoryNumber", e.target.value)}></input>
+                        <input className="form-control" value={updatedDevice.inventoryNumber} onInput={e => onChange("inventoryNumber", e.target.value)}></input>
                     </HiddenElement>
             },
             {
@@ -123,13 +123,13 @@ const DeviceDetails = () => {
     return <div>
         {device &&
             <div>
-                <h1>Device details {canEditDevice(token) && <button onClick={toggleEdit}>Edit</button>}</h1>
+                <h1>Device details {canEditDevice(token) && <button className="btn btn-primary m-1" onClick={toggleEdit}>Edit</button>}</h1>
                 <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
                     {deviceToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
                 </CommonTable>
 
                 <HiddenElement hidden={!edit} ifHidden={() => ""}>
-                    <button onClick={confirmChangeDevice}>Save</button>
+                    <button className="btn btn-primary m-2" onClick={confirmChangeDevice}>Save</button>
                 </HiddenElement>
             </div>}
     </div>

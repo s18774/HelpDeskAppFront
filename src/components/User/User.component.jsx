@@ -24,12 +24,10 @@ const User = () => {
 
 
     return <div>
-        <h1>Users</h1>
+        <h1 className="text-center m-2 mb-3">Users</h1>
 
-        {canCreateUser(token) &&
-            <button onClick={() => navigate("/user/create")}>Create user</button>}
-
-        <UserSearchBar onSubmit={getUsers} />
+        <UserSearchBar onSubmit={getUsers} additionalButton=        {canCreateUser(token) &&
+            <button className='btn btn-primary' onClick={() => navigate("/user/create")}>Create user</button>} />
 
         <CommonTable headers={["First Name", "Second Name", "Position", "Group"]}>
             {users.map(user => <TableRow key={user.userId} elements={

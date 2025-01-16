@@ -1,5 +1,7 @@
-const CommonTable = ({children, headers=[], hideHeaders=false}) => {
-   return ( <table className="table table-striped">
+const CommonTable = ({children, headers=[], hideHeaders=false, sx=null}) => {
+   return ( 
+   <div className={"border border-primary rounded m-2 p-2 " +  sx}>
+    <table className={"table table-striped "}>
     {!hideHeaders &&
     <thead>
         <tr>
@@ -9,7 +11,7 @@ const CommonTable = ({children, headers=[], hideHeaders=false}) => {
     <tbody>
         {children}
     </tbody>
-</table>)
+</table></div>)
 }
 
 export default CommonTable

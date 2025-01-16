@@ -9,12 +9,12 @@ import { useNavigate } from "react-router-dom"
 
 const CreateDevice = () => {
     const FORM_FIELDS = [
-        {id: "brand", label: "Brand", type: "text", tag: "input", required: true},
-        {id: "model", label: "Model", type: "text", tag: "input", required: true},
-        {id: "serialNumber", label: "Serial number", type: "text", tag: "input", required: true},
-        {id: "inventoryNumber", label: "Inventory number", type: "text", tag: "input", required: true},
-        {id: "macAddress", label: "MAC Address", type: "text", tag: "input", required: false},
-        {id: "guarantee", label: "Guarantee", type: "checkbox", tag: "input" },
+        { id: "brand", label: "Brand", type: "text", tag: "input", required: true },
+        { id: "model", label: "Model", type: "text", tag: "input", required: true },
+        { id: "serialNumber", label: "Serial number", type: "text", tag: "input", required: true },
+        { id: "inventoryNumber", label: "Inventory number", type: "text", tag: "input", required: true },
+        { id: "macAddress", label: "MAC Address", type: "text", tag: "input", required: false },
+        { id: "guarantee", label: "Guarantee", type: "checkbox", tag: "input" },
     ]
 
     const [formData, setFormData] = useState({})
@@ -64,13 +64,21 @@ const CreateDevice = () => {
     return (
         canCreateNewDevice(token) &&
         <div>
-            <h1>New device</h1>
-            <button onClick={onAddDevice}>Save</button>
-            <button onClick={onBackToDeviceList}>Back</button>
-            <CommonForm
-                deviceTypes={deviceTypesList}
-                onChange={onChangeForm}
-                fields={FORM_FIELDS} />
+            <h1 className="text-center m-2 mb-3">New device</h1>
+
+            <div className="d-flex flex-column justify-content-center align-items-center">
+
+                <CommonForm
+                    deviceTypes={deviceTypesList}
+                    onChange={onChangeForm}
+                    fields={FORM_FIELDS} />
+                <div>
+                    <button className="btn btn-primary m-1" onClick={onAddDevice}>Save</button>
+                    <button className="btn btn-primary m-1" onClick={onBackToDeviceList}>Back</button>
+                </div>
+            </div>
+
+
         </div>
 
     )

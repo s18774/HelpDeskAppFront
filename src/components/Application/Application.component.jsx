@@ -51,14 +51,11 @@ const Application = () => {
     }
 
     return <div>
-        <h1>Applications</h1>
-        {token != null &&
-            < button onClick={() => navigate("/application/create")}>Create application</button>
-        }
-
+        <h1 className="text-center m-2 mb-3">Applications</h1>
         {
             stages.length > 0 &&
-            <SearchBar onSubmit={getApplications} stage={getOpenStageId()} />
+            <SearchBar onSubmit={getApplications} stage={getOpenStageId()} additionalButton={token != null &&
+                < button className="btn btn-primary" onClick={() => navigate("/application/create")}>Create application</button>} />
         }
 
         <CommonTable headers={["Id", "SLA", "Opening date", "Subject", "User", "Stage"]}>

@@ -34,7 +34,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
     }
 
     return (
-        <form className="rounded" onSubmit={onSubmit}>
+        <form className="border border-primary rounded m-2 p-3 w-25" onSubmit={onSubmit}>
             {usersList.length > 0 &&
                 <div>
                     <RequiredField htmlFor="userId" name={userListLabel} required={isRquired("userId")} />
@@ -175,14 +175,14 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
             {fields.map(field =>
                 <div>
                     <RequiredField htmlFor={field.id} name={field.label} required={field.required} />
-                    {field.tag === "input" && <input id={field.id}
+                    {field.tag === "input" && <input className={field.type === "checkbox" ? "form-check-input" : "form-control"} id={field.id}
                         key={field.id} name={field.id}
                         type={field.type}
                         defaultValue={field.value}
                         onInput={e => onChange(field.id, field.type === "checkbox" ? e.target.value === "on" : e.target.value)}>
                     </input>}
 
-                    {field.tag === "textarea" && <textarea id={field.id}
+                    {field.tag === "textarea" && <textarea className="form-control" id={field.id}
                         key={field.id} name={field.id}
                         type={field.type}
                         onInput={e => onChange(field.id, e.target.value)}>
@@ -192,8 +192,8 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
 
             {passwordField && <>
                 <RequiredField htmlFor="password" name="Password" required={isRquired("password")} />
-                <input type="password" name="password" id="password" value={password} onInput={e => onPasswordChange(e.target.value)} required></input>
-                <button type="button" class="btn btn-primary" onClick={generatePassword}>Generate password</button>
+                <input className="form-control" type="password" name="password" id="password" value={password} onInput={e => onPasswordChange(e.target.value)} required></input>
+                <button type="button" class="btn btn-primary m-1 w-100" onClick={generatePassword}>Generate password</button>
                 {createdPassword && <div>Password: {createdPassword}</div>}
             </>}
         </form>

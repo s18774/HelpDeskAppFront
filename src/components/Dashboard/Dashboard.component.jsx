@@ -40,7 +40,7 @@ const Dashboard = () => {
     }, [])
 
     return <div>
-        <h1>Dashboard</h1>
+        <h1 className="text-center m-2 mb-3">Dashboard</h1>
 
         <SearchBar onSubmit={getDashboard} jobType={true}/>
         <CommonTable headers={["Type", "Id", "User", "SLA", "Stage"]}>

@@ -33,10 +33,10 @@ const Login = () => {
     return <div>
         <form onSubmit={handleForm} className="login-form">
             <label for="username">Username</label>
-            <input name="username" id="username"></input>
+            <input className="form-control w-25" name="username" id="username"></input>
             <label for="password">Password</label>
-            <input name="password" id="password" type="password"></input>
-            <button class="btn btn-primary" type="submit">Login</button>
+            <input className="form-control w-25" name="password" id="password" type="password"></input>
+            <button class="btn btn-primary m-1" type="submit">Login</button>
         </form>
     </div>
 }

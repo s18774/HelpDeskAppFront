@@ -24,12 +24,10 @@ const Device = () => {
 
 
     return <div>
-        <h1>Devices</h1>
+        <h1 className="text-center m-2 mb-3">Devices</h1>
 
-        {token != null && canCreateNewDevice(token) &&
-        <button onClick={() => navigate("/device/create")}>Create device</button>}
-
-        <DeviceSearchBar onSubmit={getDevices}/>
+        <DeviceSearchBar onSubmit={getDevices} additionalButton={token != null && canCreateNewDevice(token) &&
+        <button className='btn btn-primary' onClick={() => navigate("/device/create")}>Create device</button>}/>
 
         <CommonTable headers={["Device type", "Brand", "Model", "Serial number", "User"]}>
             {devices.map(device => <TableRow key={device.serialNumber} elements={[device.deviceTypeName, device.brand, 

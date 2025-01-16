@@ -52,13 +52,11 @@ const Ticket = () => {
 
 
     return <div>
-        <h1>Tickets</h1>
-
-        {token != null &&
-            <button class="btn btn-primary" onClick={() => navigate("/ticket/create")}>Create ticket</button>}
+        <h1 className="text-center m-2 mb-3">Tickets</h1>
 
         {stages.length > 0 &&
-            <SearchBar onSubmit={getTickets} stage={getOpenStageId()} />}
+            <SearchBar onSubmit={getTickets} stage={getOpenStageId()} additionalButton={token != null &&
+                <button class="btn btn-primary" onClick={() => navigate("/ticket/create")}>Create ticket</button>} />}
 
         <CommonTable headers={["Number", "SLA", "Opening date", "Title", "User", "Stage"]}>
             {tickets.map(app => <TableRow key={app.ticketId} elements={[<Link to={`/ticket/${app.ticketId}/details`}>{app.ticketId}</Link>,

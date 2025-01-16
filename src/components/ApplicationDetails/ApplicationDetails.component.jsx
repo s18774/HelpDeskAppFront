@@ -123,13 +123,13 @@ const ApplicationDetails = () => {
             {
                 name: "Subject", value:
                     <HiddenElement hidden={!edit} ifHidden={application.subject}>
-                        <input value={updatedApplication.subject} onInput={e => onChange("subject", e.target.value)}></input>
+                        <input className="form-control" value={updatedApplication.subject} onInput={e => onChange("subject", e.target.value)}></input>
                     </HiddenElement>
             },
             {
                 name: "Description", value:
                     <HiddenElement hidden={!edit} ifHidden={application.description}>
-                        <input value={updatedApplication.description} onInput={e => onChange("description", e.target.value)}></input>
+                        <input className="form-control" value={updatedApplication.description} onInput={e => onChange("description", e.target.value)}></input>
                     </HiddenElement>
             },
             {
@@ -232,9 +232,9 @@ const ApplicationDetails = () => {
                     canEditApplication(token) &&
                     <span>
 
-                        <button onClick={toggleEdit} class="btn btn-primary">Edit</button>
-                        {showStage() !== "Closed" && <button onClick={toggleEditStatus}>Change Status</button>}
-                        {showStage() !== "Closed" && <button onClick={closeApplication}>Close application</button>}
+                        <button onClick={toggleEdit} class="btn btn-primary m-1">Edit</button>
+                        {showStage() !== "Closed" && <button class="btn btn-primary m-1" onClick={toggleEditStatus}>Change Status</button>}
+                        {showStage() !== "Closed" && <button class="btn btn-primary m-1" onClick={closeApplication}>Close application</button>}
                     </span>
                 }</h1>
                 <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
@@ -242,7 +242,7 @@ const ApplicationDetails = () => {
                 </CommonTable>
 
                 <HiddenElement hidden={!edit && !editStatus} ifHidden={() => ""}>
-                    <button onClick={confirmChangeStage}>Save</button>
+                    <button 	class="btn btn-primary m-2" onClick={confirmChangeStage}>Save</button>
                 </HiddenElement>
             </div>}
 

@@ -5,9 +5,9 @@ import { URLS, getList } from "../../api/urls";
 import TokenContext from "../../context/TokenContext";
 import JOB_TYPES from "../../api/jobTypes";
 
-const UserSearchBar = ({onSubmit}) => {
+const UserSearchBar = ({onSubmit, additionalButton=null}) => {
     const gridStyle = {
-        gridTemplateColumns: "1fr 1fr 1fr 1fr"
+        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr"
     }
     const labels = [
         "Firstname", "Secondname", "Position", "Group"
@@ -23,15 +23,17 @@ const UserSearchBar = ({onSubmit}) => {
         onSubmit(selectedFirstname, selectedSecondname, selectedPosition, selectedGroup)
     }
 
-    return ( <div className="rounded search-box">
-        <button className="right" onClick={onSubmitSearch}>Search</button>
+    return ( <div className="border border-primary rounded m-2 p-3">
+
         <div className="grid-box" style={gridStyle}>
             {labels.map(le => <label key={le}>{le}</label>)}
+            {additionalButton != null ? additionalButton : <label></label>}
 
             <input value={selectedFirstname} onInput={e => setSelectedFirstname(e.target.value)}></input>
             <input value={selectedSecondname} onInput={e => setSelectedSecondname(e.target.value)}></input>
             <input value={selectedPosition} onInput={e => setSelectedPosition(e.target.value)}></input>
             <input value={selectedGroup} onInput={e => setSelectedGroup(e.target.value)}></input>
+            <button className="btn btn-primary" onClick={onSubmitSearch}>Search</button>
         </div>
     </div>)
 }

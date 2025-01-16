@@ -9,9 +9,9 @@ import { useNavigate } from "react-router-dom"
 
 const CreateTicket = () => {
     const FORM_FIELDS = [
-        {id: "floor", label: "Floor", type: "number", tag: "input", required: true},
-        {id: "title", label: "Title", type: "text", tag: "input", required: true},
-        {id: "description", label: "Description", type: "text", tag: "textarea", required: false}
+        { id: "floor", label: "Floor", type: "number", tag: "input", required: true },
+        { id: "title", label: "Title", type: "text", tag: "input", required: true },
+        { id: "description", label: "Description", type: "text", tag: "textarea", required: false }
     ]
 
     const [usersList, setUsersList] = useState([])
@@ -95,17 +95,23 @@ const CreateTicket = () => {
 
     return (
         <div>
-            <h1>New ticket</h1>
-            <button onClick={onAddTicket}>Save</button>
-            <button onClick={onBackToTicketList}>Back</button>
-            <CommonForm
-                usersList={usersList}
-                slaList={slaList}
-                departmentList={departmentList}
-                helpdeskList={helpdeskList}
-                groupList={groupList}
-                onChange={onChangeForm}
-                fields={FORM_FIELDS} />
+            <h1 className="text-center m-2 mb-3">New ticket</h1>
+
+            <div className="d-flex flex-column justify-content-center align-items-center">
+                <CommonForm
+                    usersList={usersList}
+                    slaList={slaList}
+                    departmentList={departmentList}
+                    helpdeskList={helpdeskList}
+                    groupList={groupList}
+                    onChange={onChangeForm}
+                    fields={FORM_FIELDS} />
+                <div>
+                    <button className="btn btn-primary m-1" onClick={onAddTicket}>Save</button>
+                    <button className="btn btn-primary m-1" onClick={onBackToTicketList}>Back</button>
+                </div>
+            </div>
+
         </div>
 
     )

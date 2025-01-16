@@ -9,14 +9,14 @@ import { useNavigate } from "react-router-dom"
 
 const CreateUser = () => {
     const FORM_FIELDS = [
-        {id: "firstName", label: "Firstname", type: "text", tag: "input", required: true},
-        {id: "secondName", label: "Secondname", type: "text", tag: "input", required: true},
-        {id: "positionName", label: "Position", type: "text", tag: "input", required: true},
-        {id: "phoneNumber", label: "Phone number", type: "tel", tag: "input", required: true},
-        {id: "email", label: "Email", type: "email", tag: "input", required: true},
-        {id: "username", label: "Username", type: "text", tag: "input", required: true},
-        {id: "floor", label: "Floor", type: "number", tag: "input", required: false},
-        {id: "room", label: "Room", type: "number", tag: "input", required: false},
+        { id: "firstName", label: "Firstname", type: "text", tag: "input", required: true },
+        { id: "secondName", label: "Secondname", type: "text", tag: "input", required: true },
+        { id: "positionName", label: "Position", type: "text", tag: "input", required: true },
+        { id: "phoneNumber", label: "Phone number", type: "tel", tag: "input", required: true },
+        { id: "email", label: "Email", type: "email", tag: "input", required: true },
+        { id: "username", label: "Username", type: "text", tag: "input", required: true },
+        { id: "floor", label: "Floor", type: "number", tag: "input", required: false },
+        { id: "room", label: "Room", type: "number", tag: "input", required: false },
     ]
 
     const requiredSelects = [
@@ -83,7 +83,7 @@ const CreateUser = () => {
                 console.log(error)
                 try {
                     toast.error(error.response.data.message)
-                } catch(err) {
+                } catch (err) {
                     toast.error("Failed to create user")
                 }
             }
@@ -97,20 +97,28 @@ const CreateUser = () => {
     return (
         canCreateUser(token) &&
         <div>
-            <h1>New user</h1>
-            <button onClick={onAddUser}>Save</button>
-            <button onClick={onBackToUserList}>Back</button>
-            <CommonForm
-                userListLabel="Supervisor"
-                onChange={onChangeForm}
-                fields={FORM_FIELDS}
-                groupList={groupsList} 
-                departmentList={departmentList}
-                usersList={usersList}
-                rolesList={rolesList}
-                requiredFields={requiredSelects}
-                expLvlsList={expLvlList}
-                passwordField={true}/>
+            <h1 className="text-center m-2 mb-3">New user</h1>
+
+
+            <div className="d-flex flex-column justify-content-center align-items-center">
+
+                <CommonForm
+                    userListLabel="Supervisor"
+                    onChange={onChangeForm}
+                    fields={FORM_FIELDS}
+                    groupList={groupsList}
+                    departmentList={departmentList}
+                    usersList={usersList}
+                    rolesList={rolesList}
+                    requiredFields={requiredSelects}
+                    expLvlsList={expLvlList}
+                    passwordField={true} />
+
+                <div>
+                    <button className="btn btn-primary m-1" onClick={onAddUser}>Save</button>
+                    <button className="btn btn-primary m-1" onClick={onBackToUserList}>Back</button>
+                </div>
+            </div>
         </div>
 
     )
