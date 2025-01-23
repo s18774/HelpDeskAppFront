@@ -24,7 +24,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
     }
 
     useEffect(() => {
-        if (usersList.length > 0) {
+        if (usersList.length == 1) {
             onChange("userId", usersList[0].userId)
         }
     }, [usersList])

@@ -37,12 +37,12 @@ export const canCreateUser = (token) => {
 
 export const canEditUser = (token) => {
     const data = decodeToken(token)
-    return isAdmin(data) || isHelpdesk(data)
+    return isAdmin(data)
 }
 
 export const canSeeAllUsers = (token) => {
     const data = decodeToken(token)
-    return isAdmin(data)
+    return isAdmin(data) || isHelpdesk(data)
 }
 
 export const canRemoveUserFromGroup = (token) => {
@@ -61,6 +61,11 @@ export const canAttachHelpdeskUser = (token) => {
 }
 
 export const canAttachDevice = (token) => {
+    const data = decodeToken(token)
+    return isAdmin(data)
+}
+
+export const canAttachGroup = (token) => {
     const data = decodeToken(token)
     return isAdmin(data)
 }

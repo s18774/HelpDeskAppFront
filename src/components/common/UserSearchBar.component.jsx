@@ -27,12 +27,12 @@ const UserSearchBar = ({onSubmit, additionalButton=null}) => {
 
         <div className="grid-box" style={gridStyle}>
             {labels.map(le => <label key={le}>{le}</label>)}
-            {additionalButton != null ? additionalButton : <label></label>}
+            {additionalButton != null ? additionalButton : <div></div>}
 
-            <input value={selectedFirstname} onInput={e => setSelectedFirstname(e.target.value)}></input>
-            <input value={selectedSecondname} onInput={e => setSelectedSecondname(e.target.value)}></input>
-            <input value={selectedPosition} onInput={e => setSelectedPosition(e.target.value)}></input>
-            <input value={selectedGroup} onInput={e => setSelectedGroup(e.target.value)}></input>
+            <input className="form-control" value={selectedFirstname} onInput={e => setSelectedFirstname(e.target.value)}></input>
+            <input className="form-control" value={selectedSecondname} onInput={e => setSelectedSecondname(e.target.value)}></input>
+            <input className="form-control" value={selectedPosition} onInput={e => setSelectedPosition(e.target.value)}></input>
+            <input className="form-control" value={selectedGroup} onInput={e => setSelectedGroup(e.target.value)}></input>
             <button className="btn btn-primary" onClick={onSubmitSearch}>Search</button>
         </div>
     </div>)

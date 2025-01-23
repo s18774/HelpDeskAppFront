@@ -9,7 +9,7 @@ import TableRow from "../common/TableRow.component"
 import Select from "../common/Select.component"
 import HiddenElement from "../common/HiddenElement.component"
 import Modal from 'react-modal';
-import { canEditTicket } from "../../api/roles"
+import { canAttachHelpdeskUser, canEditTicket } from "../../api/roles"
 
 const modalStyle = {
     content: {
@@ -137,7 +137,7 @@ const TicketDetails = () => {
             },
             {
                 name: "Helpdesk", value:
-                    <HiddenElement hidden={!edit} ifHidden={showHelpdesk()}>
+                    <HiddenElement hidden={!edit || !canAttachHelpdeskUser(token)} ifHidden={showHelpdesk()}>
                         <Select
                             keyName="userId"
                             valueName="fullName"
