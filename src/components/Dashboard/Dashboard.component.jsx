@@ -43,9 +43,10 @@ const Dashboard = () => {
         <h1 className="text-center m-2 mb-3">Dashboard</h1>
 
         <SearchBar onSubmit={getDashboard} jobType={true}/>
-        <CommonTable headers={["Type", "Id", "User", "SLA", "Stage"]}>
+        <CommonTable headers={["Type", "Title", "Id", "User", "SLA", "Stage"]}>
             {dashboard.map(job => <TableRow key={job.jobId+job.type} elements={[
                 job.jobType, 
+                job.title,
                 getJobLink(job), 
                 <Link to={`/user/${job.userId}/details`}>{job.fullName}</Link>, 
                 job.sla, 

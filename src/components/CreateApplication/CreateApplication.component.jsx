@@ -13,6 +13,12 @@ const CreateApplication = () => {
         { id: "description", label: "Description", type: "text", tag: "textarea", required: false }
     ]
 
+    const TYPES_OF_APPLICATION = [
+        {name: "Permission request"},
+        {name: "Account a new user"},
+        {name: "Order device"},
+    ]
+
     const [usersList, setUsersList] = useState([])
     const [slaList, setSlaList] = useState([])
     const [formData, setFormData] = useState({})
@@ -91,7 +97,8 @@ const CreateApplication = () => {
                     helpdeskList={helpdeskList}
                     groupList={groupList}
                     onChange={onChangeForm}
-                    fields={FORM_FIELDS} />
+                    fields={FORM_FIELDS}
+                    types_of_applications={TYPES_OF_APPLICATION} />
                 <div>
                     <button class="btn btn-primary m-1" onClick={onAddApplication}>Save</button>
                     <button class="btn btn-primary m-1" onClick={onBackToApplicationList}>Back</button>

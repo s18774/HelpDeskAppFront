@@ -4,6 +4,8 @@ import { useToken } from "../../context/TokenContext";
 import { getFileWithParams, getList, URLS } from "../../api/urls";
 import JOB_TYPES from "../../api/jobTypes";
 import fileDownload from "js-file-download";
+import { getUserId, isHelpdesk } from "../../api/roles";
+import { decodeToken } from "react-jwt";
 
 const getDateMonthAgo = () => {
     var d = new Date();
@@ -31,7 +33,13 @@ const Report = () => {
     const ref = useRef(null);
 
     const getHelpdesk = async () => {
-        setHelpdesks(await getList(URLS.AllHelpdesk, token))
+        let helpdesks = await getList(URLS.AllHelpdesk, token)
+        let data = decodeToken(token)
+        if(isHelpdesk(data)) {
+            const currentHeldeskId = getUserId(token)
+            helpdesks = helpdesks.filter(h => h.userId == currentHeldeskId)
+        }
+        setHelpdesks(helpdesks)
     }
 
     const onChangeForm = (fieldName, value) => {

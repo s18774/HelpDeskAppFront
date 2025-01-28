@@ -112,6 +112,7 @@ const ApplicationDetails = () => {
     const applicationToParams = () => {
         return [
             { name: "Number", value: application.applicationId },
+            { name: "Type", value: application.typeOfApplication },
             {
                 name: "SLA", value:
                     <HiddenElement hidden={!edit} ifHidden={application.sla}>
@@ -120,6 +121,7 @@ const ApplicationDetails = () => {
             },
             { name: "Opening date", value: application.openingDate },
             { name: "Closing date", value: application.closingDate },
+            { name: "Closed by", value: application.resolverUser },
             {
                 name: "Subject", value:
                     <HiddenElement hidden={!edit} ifHidden={application.subject}>
@@ -171,7 +173,7 @@ const ApplicationDetails = () => {
             },
             {
                 name: "Status", value:
-                    <HiddenElement hidden={!edit && !editStatus} ifHidden={showStage()}>
+                    <HiddenElement hidden={!editStatus} ifHidden={showStage()}>
                         <Select
                             keyName="stageId"
                             valueName="stageName"

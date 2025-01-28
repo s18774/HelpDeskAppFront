@@ -9,7 +9,7 @@ import TableRow from "../common/TableRow.component"
 import Select from "../common/Select.component"
 import HiddenElement from "../common/HiddenElement.component"
 import Modal from 'react-modal';
-import { canAttachHelpdeskUser, canEditTicket } from "../../api/roles"
+import { canAttachGroup, canAttachHelpdeskUser, canEditTicket } from "../../api/roles"
 
 const modalStyle = {
     content: {
@@ -29,6 +29,7 @@ const TicketDetails = () => {
     const [stages, setStages] = useState([])
     const [slaList, setSlaList] = useState([])
     const [helpdeskList, setHelpdeskList] = useState([])
+    const [groupList, setGroupList] = useState([])
     const [edit, setEdit] = useState(false)
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [editStatus, setEditStatus] = useState(false)
@@ -58,6 +59,10 @@ const TicketDetails = () => {
 
     const getHelpdesk = async () => {
         setHelpdeskList(await getList(URLS.AllHelpdesk, token))
+    }
+
+    const getGroups = async () => {
+        setGroupList(await getList(URLS.AllGroups, token))
     }
 
     const onChange = (key, value) => {
@@ -104,6 +109,11 @@ const TicketDetails = () => {
         }
     }
 
+    const showGroup = () => {
+        const group = groupList.find(s => s.groupId === ticket.groupId)
+        return group ? <Link to={`/group/${ticket.groupId}/details`}>{group.groupName}</Link> : ""
+    }
+
     const showHelpdesk = () => {
         const helpdesk = helpdeskList.find(s => s.userId === ticket.helpdeskId)
         return helpdesk ? <Link to={`/user/${ticket.helpdeskId}/details`}>{helpdesk.fullName}</Link> : ""
@@ -120,6 +130,7 @@ const TicketDetails = () => {
             },
             { name: "Opening date", value: ticket.openingDate },
             { name: "Closing date", value: ticket.closingDate },
+            { name: "Closed by", value: ticket.resolverUser },
             {
                 name: "Title", value:
                     <HiddenElement hidden={!edit} ifHidden={ticket.title}>
@@ -153,8 +164,25 @@ const TicketDetails = () => {
                     </HiddenElement>
             },
             {
+                name: "Group", value:
+                    <HiddenElement hidden={!edit || !canAttachGroup(token)} ifHidden={showGroup()}>
+                        <Select
+                            keyName="groupId"
+                            valueName="groupName"
+                            objects={groupList}
+                            name="groupId"
+                            id="groupId"
+                            key="group"
+                            onSelect={e => onChange("groupId", e.target.value)}
+                            required={true}
+                            selectedValue={updatedTicket.groupId}
+                            emptyOptionEnabled={true}
+                        />
+                    </HiddenElement>
+            },
+            {
                 name: "Status", value:
-                    <HiddenElement hidden={!edit && !editStatus} ifHidden={showStage()}>
+                    <HiddenElement hidden={!editStatus} ifHidden={showStage()}>
                         <Select
                             keyName="stageId"
                             valueName="stageName"
@@ -198,6 +226,7 @@ const TicketDetails = () => {
         getStages()
         getSLA()
         getHelpdesk()
+        getGroups()
     }, [])
 
     return <div>

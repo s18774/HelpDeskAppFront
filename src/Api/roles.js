@@ -7,11 +7,11 @@ const ROLES = {
     "HelpDesk": 4
 }
 
-const isAdmin = (data) => {
+export const isAdmin = (data) => {
     return data.role === ROLES["Admin"]
 }
 
-const isHelpdesk = (data) => {
+export const isHelpdesk = (data) => {
     return data.role === ROLES["HelpDesk"]
 }
 
@@ -78,7 +78,7 @@ export const canEditDevice = (token) => {
 
 export const canCreateReport = (token) => {
     const data = decodeToken(token)
-    return isAdmin(data)
+    return isAdmin(data) || isHelpdesk(data)
 }
 
 export const canSeeLogs = (token) => {
@@ -104,6 +104,11 @@ export const canEditApplication = (token) => {
 export const getUserFromToken = (token) => {
     const data = decodeToken(token)
     return data
+}
+
+export const getUserId = (token) => {
+    const data = decodeToken(token)
+    return data.id
 }
 
 export const getRoleName = (roleId) => {

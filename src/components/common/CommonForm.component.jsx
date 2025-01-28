@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 
 const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], slaList = [],
     helpdeskList = [], groupList = [], deviceTypes = [], fields = [], rolesList = [], jobList = [],
-    devicesList = [], passwordField = false, userListLabel = "User", requiredFields = [], expLvlsList = [] }) => {
+    devicesList = [], passwordField = false, userListLabel = "User", requiredFields = [], expLvlsList = [], types_of_applications=[] }) => {
     const [createdPassword, setCreatedPassword] = useState(null)
     const [password, setPassword] = useState(null)
 
@@ -170,6 +170,19 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                         nameMapper={dev => dev.brand + " " + dev.model + " (" + dev.serialNumber + ")"}
                         onSelect={e => onChange("deviceId", e.target.value)} />
                 </div>}
+
+            {types_of_applications.length > 0 && <div>
+                <RequiredField htmlFor="typeOfApplication" name="Type of application" required={isRquired("typeOfApplication")} />
+                    <Select
+                        keyName="name"
+                        valueName="name"
+                        objects={types_of_applications}
+                        id="typeOfApplication"
+                        name="typeOfApplication"
+                        key="typeOfApplication"
+                        emptyOptionEnabled={true}
+                        onSelect={e => onChange("typeOfApplication", e.target.value)} />
+            </div>}
 
 
             {fields.map(field =>
