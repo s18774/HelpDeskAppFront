@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { URLS } from "../../api/urls"
+import { BASE_ADDRESS, URLS } from "../../api/urls"
 import "./Login.component.css"
 import axios from 'axios'
 import toast from "react-hot-toast"
@@ -31,6 +31,7 @@ const Login = () => {
     }
 
     return <div>
+        {BASE_ADDRESS}
         <form onSubmit={handleForm} className="login-form">
             <label for="username">Username</label>
             <input className="form-control w-25" name="username" id="username"></input>
