@@ -31,7 +31,6 @@ const Login = () => {
     }
 
     return <div>
-        {BASE_ADDRESS}
         <form onSubmit={handleForm} className="login-form">
             <label for="username">Username</label>
             <input className="form-control w-25" name="username" id="username"></input>
