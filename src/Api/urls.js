@@ -1,7 +1,7 @@
 import axios from "axios"
 
-export const BASE_ADDRESS = "https://helpdeskapp-backend.wonderfulground-93721921.polandcentral.azurecontainerapps.io/api/v1/"
-// export const BASE_ADDRESS = "http://localhost:8080/api/v1/"
+export const BASE_ADDRESS = process.env.REACT_APP_BACKEND_URL
+
 
 export const URLS = {
     Auth: BASE_ADDRESS + "auth",

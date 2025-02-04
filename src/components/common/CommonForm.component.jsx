@@ -30,6 +30,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
     }, [usersList])
 
     const isRquired = (fieldName) => {
+        console.log(requiredFields)
         return requiredFields.includes(fieldName)
     }
 
@@ -63,7 +64,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
 
             {helpdeskList.length > 0 &&
                 <div>
-                    <RequiredField htmlFor="userId" name="Helpdesk" required={isRquired("userId")} />
+                    <RequiredField htmlFor="userId" name="Helpdesk" required={isRquired("helpdeskId")} />
                     <Select
                         keyName="userId"
                         valueName="fullName"

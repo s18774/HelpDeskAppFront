@@ -74,8 +74,21 @@ const CreateTicket = () => {
         }
     }, [])
 
+    const validateRequiredFields = () => {
+        for(let i = 0; i < FORM_FIELDS.length; i++) {
+            if(!FORM_FIELDS[i].required) {
+                continue
+            }
+            const field = FORM_FIELDS[i].id
+            if(!formData[field]) {
+                return false;
+            }
+        }
+        return true
+    }
+
     const onAddTicket = async () => {
-        if (Object.keys(formData).length === 0) {
+        if (!validateRequiredFields()) {
             toast.error("Fill the form first!")
         } else {
             const { ok, error } = await post(URLS.Tickets, formData, token)
@@ -105,6 +118,7 @@ const CreateTicket = () => {
                     helpdeskList={helpdeskList}
                     groupList={groupList}
                     onChange={onChangeForm}
+                    requiredFields={["userId"]}
                     fields={FORM_FIELDS} />
                 <div>
                     <button className="btn btn-primary m-1" onClick={onAddTicket}>Save</button>

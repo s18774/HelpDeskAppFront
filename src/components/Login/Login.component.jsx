@@ -30,6 +30,8 @@ const Login = () => {
 
     }
 
+    console.log(process.env)
+
     return <div>
         <form onSubmit={handleForm} className="login-form">
             <label for="username">Username</label>

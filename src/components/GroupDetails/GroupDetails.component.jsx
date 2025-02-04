@@ -87,13 +87,14 @@ const GroupDetails = () => {
             {
                 name: "Name", value:
                     <HiddenElement hidden={!edit} ifHidden={group.groupName}>
-                        <input value={updatedGroup.groupName} onInput={e => onChange("groupName", e.target.value)}></input>
+                        <input className="form-control" value={updatedGroup.groupName} onInput={e => onChange("groupName", e.target.value)}></input>
                     </HiddenElement>
             },
             {
                 name: "Active", value:
                     <HiddenElement hidden={!edit} ifHidden={updatedGroup.isGroupActive === 1 ? "Yes" : "No"}>
                         <select
+                            className="form-select"
                             name="isGroupActive"
                             id="isGroupActive"
                             key="isGroupActive"
@@ -103,7 +104,7 @@ const GroupDetails = () => {
                             <option value={1} selected={updatedGroup.isGroupActive === 1}>Yes</option>
                             <option value={0} selected={updatedGroup.isGroupActive === 0}>No</option>
                         </select>
-                        <button onClick={confirmChangeStage}>Save</button>
+                        <button className="btn btn-primary" onClick={confirmChangeStage}>Save</button>
                     </HiddenElement>
             }
         ]
@@ -128,7 +129,7 @@ const GroupDetails = () => {
     return <div>
         {group &&
             <div>
-                <h1>Group details {canEditGroup(token) && <button onClick={toggleEdit}>Edit</button>}</h1>
+                <h1>Group details {canEditGroup(token) && <button className="btn btn-primary" onClick={toggleEdit}>Edit</button>}</h1>
                 <CommonTable headers={["Param", "Value"]} hideHeaders={true}>
                     {groupToParams().map(p => <TableRow key={p.name} elements={[p.name, p.value]} />)}
                 </CommonTable>
@@ -136,7 +137,7 @@ const GroupDetails = () => {
                 {canEditGroup(token) &&
                 <div>
                     <CommonForm helpdeskList={helpdesks} onChange={onChangeForm} />
-                    <button onClick={addHelpdesk}>Add helpdesk</button>
+                    <button className="btn btn-primary" onClick={addHelpdesk}>Add helpdesk</button>
                 </div>}
                 <CommonTable headers={["First Name", "Second Name", "Position", "Action"]}>
                     {users.map(user => <TableRow key={user.userId} elements={
@@ -144,7 +145,7 @@ const GroupDetails = () => {
                             <Link to={`/user/${user.userId}/details`}>{user.firstName}</Link>,
                             <Link to={`/user/${user.userId}/details`}>{user.secondName}</Link>,
                             user.positionName,
-                            canRemoveUserFromGroup(token) ? <button onClick={() => removeUserFromGroup(user.userId)}>Remove</button> : null
+                            canRemoveUserFromGroup(token) ? <button className="btn btn-primary" onClick={() => removeUserFromGroup(user.userId)}>Remove</button> : null
                         ]} />)}
                 </CommonTable>
             </div>}

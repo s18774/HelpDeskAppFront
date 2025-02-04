@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
 const CreateApplication = () => {
     const FORM_FIELDS = [
         { id: "title", label: "Title", type: "text", tag: "input", required: true },
-        { id: "description", label: "Description", type: "text", tag: "textarea", required: false }
+        { id: "description", label: "Description", type: "text", tag: "textarea", required: true }
     ]
 
     const TYPES_OF_APPLICATION = [
@@ -68,8 +68,21 @@ const CreateApplication = () => {
         }
     }, [])
 
+    const validateRequiredFields = () => {
+        for(let i = 0; i < FORM_FIELDS.length; i++) {
+            if(!FORM_FIELDS[i].required) {
+                continue
+            }
+            const field = FORM_FIELDS[i].id
+            if(!formData[field]) {
+                return false;
+            }
+        }
+        return true
+    }
+
     const onAddApplication = async () => {
-        if (Object.keys(formData).length === 0) {
+        if (!validateRequiredFields()) {
             toast.error("Fill the form first!")
         } else {
             const { ok, error } = await post(URLS.Applications, formData, token)
@@ -98,6 +111,7 @@ const CreateApplication = () => {
                     groupList={groupList}
                     onChange={onChangeForm}
                     fields={FORM_FIELDS}
+                    requiredFields={["userId"]}
                     types_of_applications={TYPES_OF_APPLICATION} />
                 <div>
                     <button class="btn btn-primary m-1" onClick={onAddApplication}>Save</button>
