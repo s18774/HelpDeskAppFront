@@ -111,7 +111,7 @@ const ApplicationDetails = () => {
 
     const applicationToParams = () => {
         return [
-            { name: "Number", value: application.applicationId },
+            { name: "Number", value: application.applicationNumber },
             { name: "Type", value: application.typeOfApplication },
             {
                 name: "SLA", value:

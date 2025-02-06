@@ -15,7 +15,7 @@ const Application = () => {
     const { token } = useContext(TokenContext)
 
     const getApplications = async (selectedId = null, selectedUserId = null, selectedSlaId = null, selectedStageId = null) => {
-        setApplications(await getListWithParams(URLS.Applications, { applicationId: selectedId, userId: selectedUserId, slaId: selectedSlaId, stageId: selectedStageId }, token))
+        setApplications(await getListWithParams(URLS.Applications, { applicationNumber: selectedId, userId: selectedUserId, slaId: selectedSlaId, stageId: selectedStageId }, token))
     }
 
     const getStages = async () => {
@@ -58,9 +58,9 @@ const Application = () => {
                 < button className="btn btn-primary" onClick={() => navigate("/application/create")}>Create application</button>} />
         }
 
-        <CommonTable headers={["Id", "SLA", "Opening date", "Subject", "User", "Stage"]}>
-            {applications.map(app => <TableRow key={app.applicationId} elements={[<Link to={`/application/${app.applicationId}/details`}>{app.applicationId}</Link>,
-            app.sla, app.openingDate, app.subject, <Link to={`/user/${app.userId}/details`}>{app.fullName}</Link>, getStageName(app.stageId)]} />)}
+        <CommonTable headers={["Number", "SLA", "Opening date", "Subject", "User", "Stage"]}>
+            {applications.map(app => <TableRow key={app.applicationId} elements={[app.applicationNumber,
+            app.sla, app.openingDate, <Link to={`/application/${app.applicationId}/details`}>{app.subject}</Link>, <Link to={`/user/${app.userId}/details`}>{app.fullName}</Link>, getStageName(app.stageId)]} />)}
         </CommonTable>
     </div >
 }

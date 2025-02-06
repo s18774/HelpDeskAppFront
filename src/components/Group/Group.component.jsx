@@ -28,8 +28,8 @@ const Group = () => {
 
 
         <div className="d-flex flex-column justify-content-center align-items-center">
-        <CommonTable headers={["Number", "Name", "Active"]} sx={"w-50"}>
-            {groups.map(group => <TableRow key={group.groupId} elements={[<Link to={`/group/${group.groupId}/details`}>{group.groupId}</Link>, group.groupName, group.isGroupActive === 1 ? "Yes" : "No"]} />)}
+        <CommonTable headers={["Name", "Active"]} sx={"w-50"}>
+            {groups.map(group => <TableRow key={group.groupId} elements={[<Link to={`/group/${group.groupId}/details`}>{group.groupName}</Link>, group.isGroupActive === 1 ? "Yes" : "No"]} />)}
         </CommonTable>
         {canCreateNewDevice(token) &&
             <button className='btn btn-primary' onClick={() => navigate("/group/create")}>Create group</button>}

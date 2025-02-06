@@ -14,7 +14,11 @@ const Dashboard = () => {
     const {token} = useContext(TokenContext)
 
     const getDashboard = async (selectedId=null, selectedUserId=null, selectedSlaId=null, selectedStageId=null, jobType=null) => {
-        setDashboard(await getListWithParams(URLS.Dashboard, {id: selectedId, userId: selectedUserId, slaId: selectedSlaId, stageId: selectedStageId, jobType: jobType}, token))
+        setDashboard(await getListWithParams(URLS.Dashboard, {jobNumber: selectedId, userId: selectedUserId, slaId: selectedSlaId, stageId: selectedStageId, jobType: jobType}, token))
+    }
+
+    const getDashboardOpen = async () => {
+        setDashboard(await getListWithParams(URLS.Dashboard, {stageId: 1}, token))
     }
 
     const getStages = async () => {
@@ -31,11 +35,11 @@ const Dashboard = () => {
     } 
 
     const getJobLink = (job) => {
-        return <Link to={`/${job.jobType}/${job.jobId}/details`}>{job.jobId}</Link>
+        return <Link to={`/${job.jobType}/${job.jobId}/details`}>{job.title}</Link>
     }
 
     useEffect(() => {
-        getDashboard()
+        getDashboardOpen()
         getStages()
     }, [])
 
@@ -43,10 +47,10 @@ const Dashboard = () => {
         <h1 className="text-center m-2 mb-3">Dashboard</h1>
 
         <SearchBar onSubmit={getDashboard} jobType={true}/>
-        <CommonTable headers={["Type", "Title", "Id", "User", "SLA", "Stage"]}>
+        <CommonTable headers={["Number", "Type", "Title", "User", "SLA", "Stage"]}>
             {dashboard.map(job => <TableRow key={job.jobId+job.type} elements={[
+                job.jobNumber,
                 job.jobType, 
-                job.title,
                 getJobLink(job), 
                 <Link to={`/user/${job.userId}/details`}>{job.fullName}</Link>, 
                 job.sla, 

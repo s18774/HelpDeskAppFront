@@ -121,7 +121,7 @@ const TicketDetails = () => {
 
     const ticketToParams = () => {
         return [
-            { name: "Number", value: ticket.ticketId },
+            { name: "Number", value: ticket.tickerNumber },
             {
                 name: "SLA", value:
                     <HiddenElement hidden={!edit} ifHidden={ticket.sla}>

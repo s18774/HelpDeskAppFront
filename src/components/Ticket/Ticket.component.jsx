@@ -15,7 +15,7 @@ const Ticket = () => {
     const navigate = useNavigate()
 
     const getTickets = async (selectedId = null, selectedUserId = null, selectedSlaId = null, selectedStageId = null) => {
-        setTickets(await getListWithParams(URLS.Tickets, { ticketId: selectedId, userId: selectedUserId, slaId: selectedSlaId, stageId: selectedStageId }, token))
+        setTickets(await getListWithParams(URLS.Tickets, { ticketNumber: selectedId, userId: selectedUserId, slaId: selectedSlaId, stageId: selectedStageId }, token))
     }
 
     const getStages = async () => {
@@ -59,8 +59,8 @@ const Ticket = () => {
                 <button class="btn btn-primary" onClick={() => navigate("/ticket/create")}>Create ticket</button>} />}
 
         <CommonTable headers={["Number", "SLA", "Opening date", "Title", "User", "Stage"]}>
-            {tickets.map(app => <TableRow key={app.ticketId} elements={[<Link to={`/ticket/${app.ticketId}/details`}>{app.ticketId}</Link>,
-            app.sla, app.openingDate, app.title, <Link to={`/user/${app.userId}/details`}>{app.fullName}</Link>, getStageName(app.stageId)]} />)}
+            {tickets.map(app => <TableRow key={app.ticketId} elements={[app.tickerNumber,
+            app.sla, app.openingDate, <Link to={`/ticket/${app.ticketId}/details`}>{app.title}</Link>, <Link to={`/user/${app.userId}/details`}>{app.fullName}</Link>, getStageName(app.stageId)]} />)}
         </CommonTable>
     </div>
 }
