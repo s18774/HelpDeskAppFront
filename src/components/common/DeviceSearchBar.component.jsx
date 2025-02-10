@@ -36,7 +36,8 @@ const DeviceSearchBar = ({entityName, onSubmit, additionalButton=null}) => {
         getUsers()
         getDeviceTypes()
     }, [])
-
+    
+    console.log("button: " + additionalButton)
     return ( <div className="border border-primary rounded m-2 p-3">
         <div className="grid-box" style={gridStyle}>
             <label>Device Type</label>
@@ -44,7 +45,7 @@ const DeviceSearchBar = ({entityName, onSubmit, additionalButton=null}) => {
             <label>Model</label>
             <label>Serial Number</label>
             <label>User</label>
-            {additionalButton != null ? additionalButton : <label></label>}
+            {additionalButton != null && additionalButton != false ? additionalButton : <label></label>}
 
             <Select keyName="deviceTypeId" valueName="typeDescription" objects={deviceTypeList} name="deviceType" key="deviceType" onSelect={e => setSelectedDeviceTypeId(e.target.value)}/>
             <input className="form-control" value={selectedBrand} onInput={e => setSelectedBrand(e.target.value)}></input>

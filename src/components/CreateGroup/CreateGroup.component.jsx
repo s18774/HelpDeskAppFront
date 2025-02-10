@@ -25,8 +25,21 @@ const CreateGroup = () => {
         setFormData(newFormData)
     }
 
+    const allRequiredFieldsAreFilled = () => {
+        if(Object.keys(formData).length === 0) {
+            return false;
+        }
+
+        for(let i = 0; i < FORM_FIELDS.length; i++) {
+            if(formData[FORM_FIELDS[i].id] == undefined || formData[FORM_FIELDS[i].id] == null || formData[FORM_FIELDS[i].id] === "") {
+                return false;
+            }
+        }
+        return true
+    }
+
     const onAddGroup = async () => {
-        if (Object.keys(formData).length === 0) {
+        if (!allRequiredFieldsAreFilled()) {
             toast.error("Fill the form first!")
         } else {
             const { ok, error } = await post(URLS.Groups, formData, token)
@@ -35,7 +48,7 @@ const CreateGroup = () => {
                 onBackToDeviceList()
             } else {
                 console.log(error)
-                toast.error("Failed to create device")
+                toast.error("Failed to create group")
             }
         }
     }

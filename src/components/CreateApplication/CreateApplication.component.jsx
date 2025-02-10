@@ -14,9 +14,9 @@ const CreateApplication = () => {
     ]
 
     const TYPES_OF_APPLICATION = [
-        {name: "Permission request"},
         {name: "Account a new user"},
         {name: "Order device"},
+        {name: "Permission request"},
     ]
 
     const [usersList, setUsersList] = useState([])

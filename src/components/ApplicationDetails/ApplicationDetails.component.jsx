@@ -9,7 +9,7 @@ import TableRow from "../common/TableRow.component"
 import Select from "../common/Select.component"
 import HiddenElement from "../common/HiddenElement.component"
 import Modal from 'react-modal'
-import { canAttachGroup, canAttachHelpdeskUser, canEditApplication } from "../../api/roles"
+import { canAttachGroup, canAttachHelpdeskUser, canEditApplication, canSeeGroups } from "../../api/roles"
 
 
 const modalStyle = {
@@ -106,7 +106,12 @@ const ApplicationDetails = () => {
 
     const showGroup = () => {
         const group = groupList.find(s => s.groupId === application.groupId)
-        return group ? <Link to={`/group/${application.groupId}/details`}>{group.groupName}</Link> : ""
+        if(canSeeGroups(token)) {
+             return group ? <Link to={`/group/${application.groupId}/details`}>{group.groupName}</Link> : ""
+        }
+        else {
+            return group ? group.groupName : ""
+        }
     }
 
     const applicationToParams = () => {
