@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 
 const CreateTicket = () => {
     const FORM_FIELDS = [
+        { id: "roomNumber", label: "Room Number", type: "text", tag: "input", required: true},
         { id: "floor", label: "Floor", type: "number", tag: "input", required: true },
         { id: "title", label: "Title", type: "text", tag: "input", required: true },
         { id: "description", label: "Description", type: "text", tag: "textarea", required: false }
@@ -118,7 +119,7 @@ const CreateTicket = () => {
                     helpdeskList={helpdeskList}
                     groupList={groupList}
                     onChange={onChangeForm}
-                    requiredFields={["userId"]}
+                    requiredFields={["userId", "departmentId"]}
                     fields={FORM_FIELDS} />
                 <div>
                     <button className="btn btn-primary m-1" onClick={onAddTicket}>Save</button>

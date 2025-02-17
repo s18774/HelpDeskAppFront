@@ -111,7 +111,7 @@ const CreateApplication = () => {
                     groupList={groupList}
                     onChange={onChangeForm}
                     fields={FORM_FIELDS}
-                    requiredFields={["userId"]}
+                    requiredFields={["userId", "typeOfApplication"]}
                     types_of_applications={TYPES_OF_APPLICATION} />
                 <div>
                     <button class="btn btn-primary m-1" onClick={onAddApplication}>Save</button>

@@ -149,6 +149,18 @@ const TicketDetails = () => {
                     </HiddenElement>
             },
             {
+                name: "Room Number", value:
+                    <HiddenElement hidden={!edit} ifHidden={ticket.roomNumber}>
+                        <input className="form-control" value={updatedTicket.roomNumber} onInput={e => onChange("roomNumber", e.target.value)}></input>
+                    </HiddenElement>
+            },
+            {
+                name: "Floor", value:
+                    <HiddenElement hidden={!edit} ifHidden={ticket.floor}>
+                        <input className="form-control" value={updatedTicket.floor} onInput={e => onChange("floor", e.target.value)}></input>
+                    </HiddenElement>
+            },
+            {
                 name: "User", value: <Link to={`/user/${ticket.userId}/details`}>{ticket.fullName}</Link>,
             },
             {
