@@ -137,7 +137,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                         id="roleId"
                         key="roleName"
                         onSelect={e => onChange("roleId", e.target.value)}
-                        emptyOptionEnabled={false}
+                        emptyOptionEnabled={true}
                         required={true}
                     />
                 </div>}
@@ -193,7 +193,7 @@ const CommonForm = ({ onSubmit, onChange, usersList = [], departmentList = [], s
                         key={field.id} name={field.id}
                         type={field.type}
                         defaultValue={field.value}
-                        onInput={e => onChange(field.id, field.type === "checkbox" ? e.target.value === "on" : e.target.value)}>
+                        onInput={e => onChange(field.id, field.type === "checkbox" ? e.target.checked : e.target.value)}>
                     </input>}
 
                     {field.tag === "textarea" && <textarea className="form-control" id={field.id}

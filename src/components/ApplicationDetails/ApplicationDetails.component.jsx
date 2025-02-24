@@ -255,9 +255,9 @@ const ApplicationDetails = () => {
 
         <Modal isOpen={modalIsOpen} style={modalStyle}>
             Are you sure??
-            <div>
-                <button onClick={onSubmitCloseApplication}>Yes</button>
-                <button onClick={closeModal}>No</button>
+            <div className="d-flex gap-1">
+                <button className="btn btn-primary" onClick={onSubmitCloseApplication}>Yes</button>
+                <button className="btn btn-primary" onClick={closeModal}>No</button>
             </div>
         </Modal>
     </div>

@@ -20,7 +20,7 @@ const CreateUser = () => {
     ]
 
     const requiredSelects = [
-        "departmentId", "roleName", "password"
+        "departmentId", "roleName", "password", "expId"
     ]
 
     const [formData, setFormData] = useState({})
@@ -81,11 +81,7 @@ const CreateUser = () => {
                 onBackToUserList()
             } else {
                 console.log(error)
-                try {
-                    toast.error(error.response.data.message)
-                } catch (err) {
-                    toast.error("Failed to create user")
-                }
+                toast.error("Failed to create user")
             }
         }
     }

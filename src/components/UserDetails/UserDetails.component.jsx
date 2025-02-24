@@ -312,7 +312,7 @@ const UserDetails = () => {
                 {canAttachDevice(token) &&
                     <div>
                         <CommonForm devicesList={notAttachedDevices} onChange={onChangeSelectedDevice} />
-                        <button onClick={attachDevice}>Attach device</button>
+                        <button className="btn btn-primary m-2" onClick={attachDevice}>Attach device</button>
                     </div>}
 
                 <CommonTable headers={["Device type", "Brand", "Model", "Serial number"]}>

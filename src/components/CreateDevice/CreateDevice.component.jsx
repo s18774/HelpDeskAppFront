@@ -69,6 +69,7 @@ const CreateDevice = () => {
             <div className="d-flex flex-column justify-content-center align-items-center">
 
                 <CommonForm
+                requiredFields={["deviceTypeId"]}
                     deviceTypes={deviceTypesList}
                     onChange={onChangeForm}
                     fields={FORM_FIELDS} />
