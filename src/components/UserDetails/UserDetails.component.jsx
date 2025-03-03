@@ -90,6 +90,7 @@ const UserDetails = () => {
             await getUser()
         } else {
             console.log(error)
+            toast.error("Failed to update user!")
         }
     }
 
