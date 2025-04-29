@@ -7,8 +7,6 @@ import { TokenWrapper } from './context/TokenContext';
 
 
 const App = () => {
-
-
   return (
     <div>
       <BrowserRouter>

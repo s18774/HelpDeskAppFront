@@ -3,12 +3,11 @@ import { BASE_ADDRESS, URLS } from "../../api/urls"
 import "./Login.component.css"
 import axios from 'axios'
 import toast from "react-hot-toast"
-import { useContext } from "react"
-import TokenContext from "../../context/TokenContext"
+import { useToken } from "../../context/TokenContext"
 
 const Login = () => {
     const navigate = useNavigate()
-    const { setToken } = useContext(TokenContext)
+    const { setToken } = useToken()
 
     const handleForm = async (e) => {
         e.preventDefault()
@@ -29,8 +28,6 @@ const Login = () => {
         }
 
     }
-
-    console.log(process.env)
 
     return <div>
         <form onSubmit={handleForm} className="login-form">
