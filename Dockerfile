@@ -24,7 +24,7 @@ RUN npm install -g serve
 RUN npm run build
 
 # Expose port (default port for serve is 5000)
-EXPOSE 5000
+EXPOSE 3000
 
 # Start the app using "serve" in production mode
 CMD ["serve", "-s", "build"]
